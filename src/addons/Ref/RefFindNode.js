@@ -1,8 +1,7 @@
+import { handleRef } from '@stardust-ui/react-component-ref'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { findDOMNode } from 'react-dom'
-
-import { handleRef } from '../../lib/refUtils'
 
 export default class RefFindNode extends Component {
   static propTypes = {

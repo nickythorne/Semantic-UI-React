@@ -1,7 +1,6 @@
+import { handleRef } from '@stardust-ui/react-component-ref'
 import PropTypes from 'prop-types'
 import { cloneElement, Component } from 'react'
-
-import { handleRef } from '../../lib/refUtils'
 
 export default class RefForward extends Component {
   static propTypes = {

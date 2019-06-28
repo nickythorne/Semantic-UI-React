@@ -1,4 +1,5 @@
-import EventStack from '@semantic-ui-react/event-stack'
+import { EventListener, documentRef } from '@stardust-ui/react-component-event-listener'
+import { isRefObject, toRefObject } from '@stardust-ui/react-component-ref'
 import cx from 'classnames'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
@@ -90,6 +91,7 @@ class Sidebar extends Component {
 
   static defaultProps = {
     direction: 'left',
+    target: documentRef,
     visible: false,
   }
 
@@ -185,12 +187,15 @@ class Sidebar extends Component {
     )
     const rest = getUnhandledProps(Sidebar, this.props)
     const ElementType = getElementType(Sidebar, this.props)
+    const targetRef = isRefObject(target) ? target : toRefObject(target)
 
     return (
       <Ref innerRef={this.ref}>
         <ElementType {...rest} className={classes}>
           {childrenUtils.isNil(children) ? content : children}
-          {visible && <EventStack name='click' on={this.handleDocumentClick} target={target} />}
+          {visible && (
+            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type='click' />
+          )}
         </ElementType>
       </Ref>
     )

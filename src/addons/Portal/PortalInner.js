@@ -1,9 +1,10 @@
+import { handleRef } from '@stardust-ui/react-component-ref'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { createPortal } from 'react-dom'
 
-import { customPropTypes, handleRef, isBrowser, makeDebugger } from '../../lib'
+import { customPropTypes, isBrowser, makeDebugger } from '../../lib'
 import Ref from '../Ref'
 
 const debug = makeDebugger('portalInner')
