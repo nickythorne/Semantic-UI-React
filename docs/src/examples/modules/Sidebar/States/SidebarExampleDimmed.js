@@ -1,6 +1,6 @@
+import { useBooleanKnob } from '@stardust-ui/docs-components'
 import React from 'react'
 import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
 
 const SidebarExampleDimmed = () => {
   const [visible, setVisible] = useBooleanKnob({ name: 'visible' })

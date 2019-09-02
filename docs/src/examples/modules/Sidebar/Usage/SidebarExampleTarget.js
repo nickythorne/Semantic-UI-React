@@ -1,6 +1,6 @@
+import { useBooleanKnob } from '@stardust-ui/docs-components'
 import React from 'react'
 import { Header, Image, Menu, Ref, Segment, Sidebar } from 'semantic-ui-react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
 
 const SidebarExampleTarget = () => {
   const segmentRef = React.useRef()
