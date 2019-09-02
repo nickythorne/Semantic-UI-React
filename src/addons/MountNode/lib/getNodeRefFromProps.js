@@ -14,7 +14,7 @@ const getNodeRefFromProps = (props) => {
 
   if (isBrowser()) {
     if (isRefObject(node)) return node
-    return _.isNil(node) ? toRef(document.body) : toRef(node)
+    return _.isNil(node) ? toRefObject(document.body) : toRefObject(node)
   }
 }
 
