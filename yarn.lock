@@ -991,32 +991,32 @@
     prismjs "^1.16.0"
     prop-types "^15.6.1"
 
-"@stardust-ui/react-component-event-listener@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/react-component-event-listener/-/react-component-event-listener-0.34.0.tgz#a09370f6673f57ee7e41138ddbada72407b80819"
-  integrity sha512-8Gs3VfpCWNVmY7hCqzTa1ZlFHQiGVmWBZN26aYbf2xgvL/pKMrhTmn1lC2f+ETAfUmU8diTlXEIDFzN6ikrC5Q==
+"@stardust-ui/react-component-event-listener@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/react-component-event-listener/-/react-component-event-listener-0.37.0.tgz#1aca683dec666a02c01aeb561c58759cbd9b0b62"
+  integrity sha512-KaViLGwqG+lIse3q2xbqddU6kFerNg3n4c8QYugWP3L9v/jTzKycGNcbjGrxugMbnU4hPn73Xapisu6XCtPGWw==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    prop-types "^15.6.1"
+    prop-types "^15.7.2"
 
-"@stardust-ui/react-component-ref@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/react-component-ref/-/react-component-ref-0.34.0.tgz#9c90d700b86b68a367aba23fba538a4fb0b3023e"
-  integrity sha512-WG6s7PekItbcBHvfB+clmMQHIuQeSG4nHenP5qnvgL9nwdSz+/D2QLKPYibPdy4enkCesdXQgflCPaorsQVvKQ==
+"@stardust-ui/react-component-ref@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/react-component-ref/-/react-component-ref-0.37.0.tgz#569d862eee7e408f3d1c1e9d2542eaa5ca3dcb98"
+  integrity sha512-awFDcxWMx3eBE7BOvqWzbRWtaDyblwmxhAVaS1gi5v8pVu5RQYnGsV2wfXRrvl9DfruYPFIzshHq7UMG7YqtXg==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@stardust-ui/react-proptypes" "^0.34.0"
-    prop-types "^15.6.1"
+    "@stardust-ui/react-proptypes" "^0.37.0"
+    prop-types "^15.7.2"
     react-is "^16.6.3"
 
-"@stardust-ui/react-proptypes@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/react-proptypes/-/react-proptypes-0.34.0.tgz#19c624f3fe3af369375424a0fb0bec155f5a6d4b"
-  integrity sha512-8RZbl4siqgkcMPmdba42tKAiR4D0F5/uaDYDELqWtGUjLFxaRujjtmlY/UH9tQY9Qy4GTa5+pEXrr4oreg18Sg==
+"@stardust-ui/react-proptypes@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/react-proptypes/-/react-proptypes-0.37.0.tgz#da0acc22518a2e22c141726bc1ca08d8ce9cd722"
+  integrity sha512-2UI+QVvS4oQivV9h+7920aPjWo19UJpTtRtCeVUHu8TY9Z40btu7+sPZfRM+gtYIKN8nUKvWBspPpAFHVNsPiQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    lodash "^4.17.11"
-    prop-types "^15.6.1"
+    lodash "^4.17.15"
+    prop-types "^15.7.2"
 
 "@textlint/ast-node-types@^4.0.3":
   version "4.2.1"
