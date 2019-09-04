@@ -1,50 +1,50 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useVerticalAlignProp,
-} from '../../lib'
-import ItemHeader from './ItemHeader'
-import ItemDescription from './ItemDescription'
-import ItemExtra from './ItemExtra'
-import ItemMeta from './ItemMeta'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useVerticalAlignProp } from '../../lib';
+import ItemHeader from './ItemHeader';
+import ItemDescription from './ItemDescription';
+import ItemExtra from './ItemExtra';
+import ItemMeta from './ItemMeta';
 /**
  * An item can contain content.
  */
-function ItemContent(props) {
-  const { children, className, content, description, extra, header, meta, verticalAlign } = props
 
-  const classes = cx(useVerticalAlignProp(verticalAlign), 'content', className)
-  const rest = getUnhandledProps(ItemContent, props)
-  const ElementType = getElementType(ItemContent, props)
+function ItemContent(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      description = props.description,
+      extra = props.extra,
+      header = props.header,
+      meta = props.meta,
+      verticalAlign = props.verticalAlign;
+  var classes = cx(useVerticalAlignProp(verticalAlign), 'content', className);
+  var rest = getUnhandledProps(ItemContent, props);
+  var ElementType = getElementType(ItemContent, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {ItemHeader.create(header, { autoGenerateKey: false })}
-      {ItemMeta.create(meta, { autoGenerateKey: false })}
-      {ItemDescription.create(description, { autoGenerateKey: false })}
-      {ItemExtra.create(extra, { autoGenerateKey: false })}
-      {content}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), ItemHeader.create(header, {
+    autoGenerateKey: false
+  }), ItemMeta.create(meta, {
+    autoGenerateKey: false
+  }), ItemDescription.create(description, {
+    autoGenerateKey: false
+  }), ItemExtra.create(extra, {
+    autoGenerateKey: false
+  }), content);
 }
 
-ItemContent.propTypes = {
+ItemContent.handledProps = ["as", "children", "className", "content", "description", "extra", "header", "meta", "verticalAlign"];
+ItemContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -70,7 +70,6 @@ ItemContent.propTypes = {
   meta: customPropTypes.itemShorthand,
 
   /** Content can specify its vertical alignment. */
-  verticalAlign: PropTypes.oneOf(SUI.VERTICAL_ALIGNMENTS),
-}
-
-export default ItemContent
+  verticalAlign: PropTypes.oneOf(SUI.VERTICAL_ALIGNMENTS)
+} : {};
+export default ItemContent;

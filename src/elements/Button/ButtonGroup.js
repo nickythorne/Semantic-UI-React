@@ -1,98 +1,61 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useKeyOrValueAndKey,
-  useValueAndKey,
-  useWidthProp,
-} from '../../lib'
-import Button from './Button'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _map from "lodash/map";
+import _isNil from "lodash/isNil";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useWidthProp } from '../../lib';
+import Button from './Button';
 /**
  * Buttons can be grouped.
  */
+
 function ButtonGroup(props) {
-  const {
-    attached,
-    basic,
-    buttons,
-    children,
-    className,
-    color,
-    compact,
-    content,
-    floated,
-    fluid,
-    icon,
-    inverted,
-    labeled,
-    negative,
-    positive,
-    primary,
-    secondary,
-    size,
-    toggle,
-    vertical,
-    widths,
-  } = props
+  var attached = props.attached,
+      basic = props.basic,
+      buttons = props.buttons,
+      children = props.children,
+      className = props.className,
+      color = props.color,
+      compact = props.compact,
+      content = props.content,
+      floated = props.floated,
+      fluid = props.fluid,
+      icon = props.icon,
+      inverted = props.inverted,
+      labeled = props.labeled,
+      negative = props.negative,
+      positive = props.positive,
+      primary = props.primary,
+      secondary = props.secondary,
+      size = props.size,
+      toggle = props.toggle,
+      vertical = props.vertical,
+      widths = props.widths;
+  var classes = cx('ui', color, size, useKeyOnly(basic, 'basic'), useKeyOnly(compact, 'compact'), useKeyOnly(fluid, 'fluid'), useKeyOnly(icon, 'icon'), useKeyOnly(inverted, 'inverted'), useKeyOnly(labeled, 'labeled'), useKeyOnly(negative, 'negative'), useKeyOnly(positive, 'positive'), useKeyOnly(primary, 'primary'), useKeyOnly(secondary, 'secondary'), useKeyOnly(toggle, 'toggle'), useKeyOnly(vertical, 'vertical'), useKeyOrValueAndKey(attached, 'attached'), useValueAndKey(floated, 'floated'), useWidthProp(widths), 'buttons', className);
+  var rest = getUnhandledProps(ButtonGroup, props);
+  var ElementType = getElementType(ButtonGroup, props);
 
-  const classes = cx(
-    'ui',
-    color,
-    size,
-    useKeyOnly(basic, 'basic'),
-    useKeyOnly(compact, 'compact'),
-    useKeyOnly(fluid, 'fluid'),
-    useKeyOnly(icon, 'icon'),
-    useKeyOnly(inverted, 'inverted'),
-    useKeyOnly(labeled, 'labeled'),
-    useKeyOnly(negative, 'negative'),
-    useKeyOnly(positive, 'positive'),
-    useKeyOnly(primary, 'primary'),
-    useKeyOnly(secondary, 'secondary'),
-    useKeyOnly(toggle, 'toggle'),
-    useKeyOnly(vertical, 'vertical'),
-    useKeyOrValueAndKey(attached, 'attached'),
-    useValueAndKey(floated, 'floated'),
-    useWidthProp(widths),
-    'buttons',
-    className,
-  )
-  const rest = getUnhandledProps(ButtonGroup, props)
-  const ElementType = getElementType(ButtonGroup, props)
-
-  if (_.isNil(buttons)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {childrenUtils.isNil(children) ? content : children}
-      </ElementType>
-    )
+  if (_isNil(buttons)) {
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), childrenUtils.isNil(children) ? content : children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {_.map(buttons, (button) => Button.create(button))}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), _map(buttons, function (button) {
+    return Button.create(button);
+  }));
 }
 
-ButtonGroup.propTypes = {
+ButtonGroup.handledProps = ["as", "attached", "basic", "buttons", "children", "className", "color", "compact", "content", "floated", "fluid", "icon", "inverted", "labeled", "negative", "positive", "primary", "secondary", "size", "toggle", "vertical", "widths"];
+ButtonGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** Groups can be attached to other content. */
-  attached: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
-  ]),
+  attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right', 'top', 'bottom'])]),
 
   /** Groups can be less pronounced. */
   basic: PropTypes.bool,
@@ -152,7 +115,6 @@ ButtonGroup.propTypes = {
   vertical: PropTypes.bool,
 
   /** Groups can have their widths divided evenly. */
-  widths: PropTypes.oneOf(SUI.WIDTHS),
-}
-
-export default ButtonGroup
+  widths: PropTypes.oneOf(SUI.WIDTHS)
+} : {};
+export default ButtonGroup;

@@ -1,68 +1,57 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-  useKeyOrValueAndKey,
-} from '../../lib'
-import Item from './Item'
-
+import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
+import _extends from "@babel/runtime/helpers/extends";
+import _map from "lodash/map";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, useKeyOnly, useKeyOrValueAndKey } from '../../lib';
+import Item from './Item';
 /**
  * A group of items.
  */
-function ItemGroup(props) {
-  const { children, className, content, divided, items, link, relaxed, unstackable } = props
 
-  const classes = cx(
-    'ui',
-    useKeyOnly(divided, 'divided'),
-    useKeyOnly(link, 'link'),
-    useKeyOnly(unstackable, 'unstackable'),
-    useKeyOrValueAndKey(relaxed, 'relaxed'),
-    'items',
-    className,
-  )
-  const rest = getUnhandledProps(ItemGroup, props)
-  const ElementType = getElementType(ItemGroup, props)
+function ItemGroup(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      divided = props.divided,
+      items = props.items,
+      link = props.link,
+      relaxed = props.relaxed,
+      unstackable = props.unstackable;
+  var classes = cx('ui', useKeyOnly(divided, 'divided'), useKeyOnly(link, 'link'), useKeyOnly(unstackable, 'unstackable'), useKeyOrValueAndKey(relaxed, 'relaxed'), 'items', className);
+  var rest = getUnhandledProps(ItemGroup, props);
+  var ElementType = getElementType(ItemGroup, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
+
   if (!childrenUtils.isNil(content)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {content}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), content);
   }
 
-  const itemsJSX = _.map(items, (item) => {
-    const { childKey, ...itemProps } = item
-    const finalKey =
-      childKey ||
-      [itemProps.content, itemProps.description, itemProps.header, itemProps.meta].join('-')
+  var itemsJSX = _map(items, function (item) {
+    var childKey = item.childKey,
+        itemProps = _objectWithoutProperties(item, ["childKey"]);
 
-    return <Item {...itemProps} key={finalKey} />
-  })
+    var finalKey = childKey || [itemProps.content, itemProps.description, itemProps.header, itemProps.meta].join('-');
+    return React.createElement(Item, _extends({}, itemProps, {
+      key: finalKey
+    }));
+  });
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {itemsJSX}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), itemsJSX);
 }
 
-ItemGroup.propTypes = {
+ItemGroup.handledProps = ["as", "children", "className", "content", "divided", "items", "link", "relaxed", "unstackable"];
+ItemGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -88,7 +77,6 @@ ItemGroup.propTypes = {
   relaxed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['very'])]),
 
   /** Prevent items from stacking on mobile. */
-  unstackable: PropTypes.bool,
-}
-
-export default ItemGroup
+  unstackable: PropTypes.bool
+} : {};
+export default ItemGroup;

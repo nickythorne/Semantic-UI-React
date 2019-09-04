@@ -1,77 +1,130 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+"use strict";
 
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getUnhandledProps,
-  getElementType,
-  useKeyOnly,
-} from '../../lib'
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _invoke2 = _interopRequireDefault(require("lodash/invoke"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _lib = require("../../lib");
 
 /**
  * A section sub-component for Breadcrumb component.
  */
-export default class BreadcrumbSection extends Component {
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: PropTypes.elementType,
+var BreadcrumbSection =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2["default"])(BreadcrumbSection, _Component);
 
-    /** Style as the currently active section. */
-    active: PropTypes.bool,
+  function BreadcrumbSection() {
+    var _getPrototypeOf2;
 
-    /** Primary content. */
-    children: PropTypes.node,
+    var _this;
 
-    /** Additional classes. */
-    className: PropTypes.string,
+    (0, _classCallCheck2["default"])(this, BreadcrumbSection);
 
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    /** Render as an `a` tag instead of a `div` and adds the href attribute. */
-    href: customPropTypes.every([customPropTypes.disallow(['link']), PropTypes.string]),
-
-    /** Render as an `a` tag instead of a `div`. */
-    link: customPropTypes.every([customPropTypes.disallow(['href']), PropTypes.bool]),
-
-    /**
-     * Called on click. When passed, the component will render as an `a`
-     * tag by default instead of a `div`.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(BreadcrumbSection)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "computeElementType", function () {
+      var _this$props = _this.props,
+          link = _this$props.link,
+          onClick = _this$props.onClick;
+      if (link || onClick) return 'a';
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClick", function (e) {
+      return (0, _invoke2["default"])(_this.props, 'onClick', e, _this.props);
+    });
+    return _this;
   }
 
-  computeElementType = () => {
-    const { link, onClick } = this.props
+  (0, _createClass2["default"])(BreadcrumbSection, [{
+    key: "render",
+    value: function render() {
+      var _this$props2 = this.props,
+          active = _this$props2.active,
+          children = _this$props2.children,
+          className = _this$props2.className,
+          content = _this$props2.content,
+          href = _this$props2.href;
+      var classes = (0, _classnames["default"])((0, _lib.useKeyOnly)(active, 'active'), 'section', className);
+      var rest = (0, _lib.getUnhandledProps)(BreadcrumbSection, this.props);
+      var ElementType = (0, _lib.getElementType)(BreadcrumbSection, this.props, this.computeElementType);
+      return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+        className: classes,
+        href: href,
+        onClick: this.handleClick
+      }), _lib.childrenUtils.isNil(children) ? content : children);
+    }
+  }]);
+  return BreadcrumbSection;
+}(_react.Component);
 
-    if (link || onClick) return 'a'
-  }
+exports["default"] = BreadcrumbSection;
+(0, _defineProperty2["default"])(BreadcrumbSection, "handledProps", ["active", "as", "children", "className", "content", "href", "link", "onClick"]);
+BreadcrumbSection.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** An element type to render as (string or function). */
+  as: _propTypes["default"].elementType,
 
-  handleClick = (e) => _.invoke(this.props, 'onClick', e, this.props)
+  /** Style as the currently active section. */
+  active: _propTypes["default"].bool,
 
-  render() {
-    const { active, children, className, content, href } = this.props
+  /** Primary content. */
+  children: _propTypes["default"].node,
 
-    const classes = cx(useKeyOnly(active, 'active'), 'section', className)
-    const rest = getUnhandledProps(BreadcrumbSection, this.props)
-    const ElementType = getElementType(BreadcrumbSection, this.props, this.computeElementType)
+  /** Additional classes. */
+  className: _propTypes["default"].string,
 
-    return (
-      <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>
-        {childrenUtils.isNil(children) ? content : children}
-      </ElementType>
-    )
-  }
-}
+  /** Shorthand for primary content. */
+  content: _lib.customPropTypes.contentShorthand,
 
-BreadcrumbSection.create = createShorthandFactory(BreadcrumbSection, (content) => ({
-  content,
-  link: true,
-}))
+  /** Render as an `a` tag instead of a `div` and adds the href attribute. */
+  href: _lib.customPropTypes.every([_lib.customPropTypes.disallow(['link']), _propTypes["default"].string]),
+
+  /** Render as an `a` tag instead of a `div`. */
+  link: _lib.customPropTypes.every([_lib.customPropTypes.disallow(['href']), _propTypes["default"].bool]),
+
+  /**
+   * Called on click. When passed, the component will render as an `a`
+   * tag by default instead of a `div`.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick: _propTypes["default"].func
+} : {};
+BreadcrumbSection.create = (0, _lib.createShorthandFactory)(BreadcrumbSection, function (content) {
+  return {
+    content: content,
+    link: true
+  };
+});

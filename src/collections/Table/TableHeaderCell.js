@@ -1,22 +1,27 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getUnhandledProps, useValueAndKey } from '../../lib'
-import TableCell from './TableCell'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getUnhandledProps, useValueAndKey } from '../../lib';
+import TableCell from './TableCell';
 /**
  * A table can have a header cell.
  */
-function TableHeaderCell(props) {
-  const { as, className, sorted } = props
-  const classes = cx(useValueAndKey(sorted, 'sorted'), className)
-  const rest = getUnhandledProps(TableHeaderCell, props)
 
-  return <TableCell {...rest} as={as} className={classes} />
+function TableHeaderCell(props) {
+  var as = props.as,
+      className = props.className,
+      sorted = props.sorted;
+  var classes = cx(useValueAndKey(sorted, 'sorted'), className);
+  var rest = getUnhandledProps(TableHeaderCell, props);
+  return React.createElement(TableCell, _extends({}, rest, {
+    as: as,
+    className: classes
+  }));
 }
 
-TableHeaderCell.propTypes = {
+TableHeaderCell.handledProps = ["as", "className", "sorted"];
+TableHeaderCell.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -24,11 +29,9 @@ TableHeaderCell.propTypes = {
   className: PropTypes.string,
 
   /** A header cell can be sorted in ascending or descending order. */
-  sorted: PropTypes.oneOf(['ascending', 'descending']),
-}
-
+  sorted: PropTypes.oneOf(['ascending', 'descending'])
+} : {};
 TableHeaderCell.defaultProps = {
-  as: 'th',
-}
-
-export default TableHeaderCell
+  as: 'th'
+};
+export default TableHeaderCell;

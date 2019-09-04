@@ -1,1 +1,2 @@
-export default from './Rail'
+import _default from './Rail';
+export { _default as default };

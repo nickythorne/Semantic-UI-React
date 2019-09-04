@@ -1,53 +1,70 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthand,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-import FeedDate from './FeedDate'
-import FeedExtra from './FeedExtra'
-import FeedMeta from './FeedMeta'
-import FeedSummary from './FeedSummary'
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthand, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
+import FeedDate from './FeedDate';
+import FeedExtra from './FeedExtra';
+import FeedMeta from './FeedMeta';
+import FeedSummary from './FeedSummary';
 
 function FeedContent(props) {
-  const { children, className, content, extraImages, extraText, date, meta, summary } = props
-
-  const classes = cx('content', className)
-  const rest = getUnhandledProps(FeedContent, props)
-  const ElementType = getElementType(FeedContent, props)
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      extraImages = props.extraImages,
+      extraText = props.extraText,
+      date = props.date,
+      meta = props.meta,
+      summary = props.summary;
+  var classes = cx('content', className);
+  var rest = getUnhandledProps(FeedContent, props);
+  var ElementType = getElementType(FeedContent, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {createShorthand(FeedDate, (val) => ({ content: val }), date, { autoGenerateKey: false })}
-      {createShorthand(FeedSummary, (val) => ({ content: val }), summary, {
-        autoGenerateKey: false,
-      })}
-      {content}
-      {createShorthand(FeedExtra, (val) => ({ text: true, content: val }), extraText, {
-        autoGenerateKey: false,
-      })}
-      {createShorthand(FeedExtra, (val) => ({ images: val }), extraImages, {
-        autoGenerateKey: false,
-      })}
-      {createShorthand(FeedMeta, (val) => ({ content: val }), meta, { autoGenerateKey: false })}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), createShorthand(FeedDate, function (val) {
+    return {
+      content: val
+    };
+  }, date, {
+    autoGenerateKey: false
+  }), createShorthand(FeedSummary, function (val) {
+    return {
+      content: val
+    };
+  }, summary, {
+    autoGenerateKey: false
+  }), content, createShorthand(FeedExtra, function (val) {
+    return {
+      text: true,
+      content: val
+    };
+  }, extraText, {
+    autoGenerateKey: false
+  }), createShorthand(FeedExtra, function (val) {
+    return {
+      images: val
+    };
+  }, extraImages, {
+    autoGenerateKey: false
+  }), createShorthand(FeedMeta, function (val) {
+    return {
+      content: val
+    };
+  }, meta, {
+    autoGenerateKey: false
+  }));
 }
 
-FeedContent.propTypes = {
+FeedContent.handledProps = ["as", "children", "className", "content", "date", "extraImages", "extraText", "meta", "summary"];
+FeedContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -73,7 +90,6 @@ FeedContent.propTypes = {
   meta: customPropTypes.itemShorthand,
 
   /** Shorthand for FeedSummary. */
-  summary: customPropTypes.itemShorthand,
-}
-
-export default FeedContent
+  summary: customPropTypes.itemShorthand
+} : {};
+export default FeedContent;

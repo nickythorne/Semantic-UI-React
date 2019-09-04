@@ -1,45 +1,49 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthand,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-import FeedDate from './FeedDate'
-import FeedUser from './FeedUser'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthand, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
+import FeedDate from './FeedDate';
+import FeedUser from './FeedUser';
 /**
  * A feed can contain a summary.
  */
-function FeedSummary(props) {
-  const { children, className, content, date, user } = props
 
-  const classes = cx('summary', className)
-  const rest = getUnhandledProps(FeedSummary, props)
-  const ElementType = getElementType(FeedSummary, props)
+function FeedSummary(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      date = props.date,
+      user = props.user;
+  var classes = cx('summary', className);
+  var rest = getUnhandledProps(FeedSummary, props);
+  var ElementType = getElementType(FeedSummary, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {createShorthand(FeedUser, (val) => ({ content: val }), user, { autoGenerateKey: false })}
-      {content}
-      {createShorthand(FeedDate, (val) => ({ content: val }), date, { autoGenerateKey: false })}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), createShorthand(FeedUser, function (val) {
+    return {
+      content: val
+    };
+  }, user, {
+    autoGenerateKey: false
+  }), content, createShorthand(FeedDate, function (val) {
+    return {
+      content: val
+    };
+  }, date, {
+    autoGenerateKey: false
+  }));
 }
 
-FeedSummary.propTypes = {
+FeedSummary.handledProps = ["as", "children", "className", "content", "date", "user"];
+FeedSummary.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -56,7 +60,6 @@ FeedSummary.propTypes = {
   date: customPropTypes.itemShorthand,
 
   /** Shorthand for FeedUser. */
-  user: customPropTypes.itemShorthand,
-}
-
-export default FeedSummary
+  user: customPropTypes.itemShorthand
+} : {};
+export default FeedSummary;

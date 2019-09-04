@@ -1,42 +1,30 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly } from '../../lib';
 /**
  * A label can be grouped.
  */
+
 function LabelGroup(props) {
-  const { children, circular, className, color, content, size, tag } = props
-
-  const classes = cx(
-    'ui',
-    color,
-    size,
-    useKeyOnly(circular, 'circular'),
-    useKeyOnly(tag, 'tag'),
-    'labels',
-    className,
-  )
-  const rest = getUnhandledProps(LabelGroup, props)
-  const ElementType = getElementType(LabelGroup, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      circular = props.circular,
+      className = props.className,
+      color = props.color,
+      content = props.content,
+      size = props.size,
+      tag = props.tag;
+  var classes = cx('ui', color, size, useKeyOnly(circular, 'circular'), useKeyOnly(tag, 'tag'), 'labels', className);
+  var rest = getUnhandledProps(LabelGroup, props);
+  var ElementType = getElementType(LabelGroup, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-LabelGroup.propTypes = {
+LabelGroup.handledProps = ["as", "children", "circular", "className", "color", "content", "size", "tag"];
+LabelGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -59,7 +47,6 @@ LabelGroup.propTypes = {
   size: PropTypes.oneOf(SUI.SIZES),
 
   /** Label group can share tag formatting. */
-  tag: PropTypes.bool,
-}
-
-export default LabelGroup
+  tag: PropTypes.bool
+} : {};
+export default LabelGroup;

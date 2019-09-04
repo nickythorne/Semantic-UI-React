@@ -1,84 +1,51 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useTextAlignProp,
-  useVerticalAlignProp,
-  useWidthProp,
-} from '../../lib'
-import Icon from '../../elements/Icon'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useTextAlignProp, useVerticalAlignProp, useWidthProp } from '../../lib';
+import Icon from '../../elements/Icon';
 /**
  * A table row can have cells.
  */
-function TableCell(props) {
-  const {
-    active,
-    children,
-    className,
-    collapsing,
-    content,
-    disabled,
-    error,
-    icon,
-    negative,
-    positive,
-    selectable,
-    singleLine,
-    textAlign,
-    verticalAlign,
-    warning,
-    width,
-  } = props
 
-  const classes = cx(
-    useKeyOnly(active, 'active'),
-    useKeyOnly(collapsing, 'collapsing'),
-    useKeyOnly(disabled, 'disabled'),
-    useKeyOnly(error, 'error'),
-    useKeyOnly(negative, 'negative'),
-    useKeyOnly(positive, 'positive'),
-    useKeyOnly(selectable, 'selectable'),
-    useKeyOnly(singleLine, 'single line'),
-    useKeyOnly(warning, 'warning'),
-    useTextAlignProp(textAlign),
-    useVerticalAlignProp(verticalAlign),
-    useWidthProp(width, 'wide'),
-    className,
-  )
-  const rest = getUnhandledProps(TableCell, props)
-  const ElementType = getElementType(TableCell, props)
+function TableCell(props) {
+  var active = props.active,
+      children = props.children,
+      className = props.className,
+      collapsing = props.collapsing,
+      content = props.content,
+      disabled = props.disabled,
+      error = props.error,
+      icon = props.icon,
+      negative = props.negative,
+      positive = props.positive,
+      selectable = props.selectable,
+      singleLine = props.singleLine,
+      textAlign = props.textAlign,
+      verticalAlign = props.verticalAlign,
+      warning = props.warning,
+      width = props.width;
+  var classes = cx(useKeyOnly(active, 'active'), useKeyOnly(collapsing, 'collapsing'), useKeyOnly(disabled, 'disabled'), useKeyOnly(error, 'error'), useKeyOnly(negative, 'negative'), useKeyOnly(positive, 'positive'), useKeyOnly(selectable, 'selectable'), useKeyOnly(singleLine, 'single line'), useKeyOnly(warning, 'warning'), useTextAlignProp(textAlign), useVerticalAlignProp(verticalAlign), useWidthProp(width, 'wide'), className);
+  var rest = getUnhandledProps(TableCell, props);
+  var ElementType = getElementType(TableCell, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {Icon.create(icon)}
-      {content}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), Icon.create(icon), content);
 }
 
+TableCell.handledProps = ["active", "as", "children", "className", "collapsing", "content", "disabled", "error", "icon", "negative", "positive", "selectable", "singleLine", "textAlign", "verticalAlign", "warning", "width"];
 TableCell.defaultProps = {
-  as: 'td',
-}
-
-TableCell.propTypes = {
+  as: 'td'
+};
+TableCell.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -119,7 +86,7 @@ TableCell.propTypes = {
   singleLine: PropTypes.bool,
 
   /** A table cell can adjust its text alignment. */
-  textAlign: PropTypes.oneOf(_.without(SUI.TEXT_ALIGNMENTS, 'justified')),
+  textAlign: PropTypes.oneOf(_without(SUI.TEXT_ALIGNMENTS, 'justified')),
 
   /** A table cell can adjust its text alignment. */
   verticalAlign: PropTypes.oneOf(SUI.VERTICAL_ALIGNMENTS),
@@ -128,9 +95,11 @@ TableCell.propTypes = {
   warning: PropTypes.bool,
 
   /** A table can specify the width of individual columns independently. */
-  width: PropTypes.oneOf(SUI.WIDTHS),
-}
-
-TableCell.create = createShorthandFactory(TableCell, (content) => ({ content }))
-
-export default TableCell
+  width: PropTypes.oneOf(SUI.WIDTHS)
+} : {};
+TableCell.create = createShorthandFactory(TableCell, function (content) {
+  return {
+    content: content
+  };
+});
+export default TableCell;

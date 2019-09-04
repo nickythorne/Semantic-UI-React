@@ -1,297 +1,345 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import { cloneElement, Component } from 'react'
-
-import { makeDebugger, normalizeTransitionDuration, SUI, useKeyOnly } from '../../lib'
-import TransitionGroup from './TransitionGroup'
-
-const debug = makeDebugger('transition')
-
-const TRANSITION_TYPE = {
+import _objectSpread from "@babel/runtime/helpers/objectSpread";
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _createClass from "@babel/runtime/helpers/createClass";
+import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
+import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _includes from "lodash/includes";
+import _isNil from "lodash/isNil";
+import _get from "lodash/get";
+import _invoke from "lodash/invoke";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import { cloneElement, Component } from 'react';
+import { normalizeTransitionDuration, SUI, useKeyOnly } from '../../lib';
+import TransitionGroup from './TransitionGroup';
+var TRANSITION_TYPE = {
   ENTERING: 'show',
-  EXITING: 'hide',
-}
+  EXITING: 'hide'
+  /**
+   * A transition is an animation usually used to move content in or out of view.
+   */
 
-/**
- * A transition is an animation usually used to move content in or out of view.
- */
-export default class Transition extends Component {
-  static propTypes = {
-    /** Named animation event to used. Must be defined in CSS. */
-    animation: PropTypes.oneOfType([PropTypes.oneOf(SUI.TRANSITIONS), PropTypes.string]),
+};
 
-    /** Primary content. */
-    children: PropTypes.element.isRequired,
+var Transition =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Transition, _Component);
 
-    /** Whether it is directional animation event or not. Use it only for custom transitions. */
-    directional: PropTypes.bool,
+  function Transition() {
+    var _getPrototypeOf2;
 
-    /** Duration of the CSS transition animation in milliseconds. */
-    duration: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        hide: PropTypes.number,
-        show: PropTypes.number,
-      }),
-      PropTypes.string,
-    ]),
+    var _this;
 
-    /** Show the component; triggers the enter or exit animation. */
-    visible: PropTypes.bool,
+    _classCallCheck(this, Transition);
 
-    /** Wait until the first "enter" transition to mount the component (add it to the DOM). */
-    mountOnShow: PropTypes.bool,
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    /**
-     * Callback on each transition that changes visibility to shown.
-     *
-     * @param {null}
-     * @param {object} data - All props with status.
-     */
-    onComplete: PropTypes.func,
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Transition)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    /**
-     * Callback on each transition that changes visibility to hidden.
-     *
-     * @param {null}
-     * @param {object} data - All props with status.
-     */
-    onHide: PropTypes.func,
+    _defineProperty(_assertThisInitialized(_this), "handleStart", function () {
+      var duration = _this.props.duration;
+      var status = _this.nextStatus;
+      _this.nextStatus = null;
 
-    /**
-     * Callback on each transition that changes visibility to shown.
-     *
-     * @param {null}
-     * @param {object} data - All props with status.
-     */
-    onShow: PropTypes.func,
+      _this.setState({
+        status: status,
+        animating: true
+      }, function () {
+        var durationType = TRANSITION_TYPE[status];
+        var durationValue = normalizeTransitionDuration(duration, durationType);
 
-    /**
-     * Callback on animation start.
-     *
-     * @param {null}
-     * @param {object} data - All props with status.
-     */
-    onStart: PropTypes.func,
+        _invoke(_this.props, 'onStart', null, _objectSpread({}, _this.props, {
+          status: status
+        }));
 
-    /** React's key of the element. */
-    reactKey: PropTypes.string,
+        _this.timeoutId = setTimeout(_this.handleComplete, durationValue);
+      });
+    });
 
-    /** Run the enter animation when the component mounts, if it is initially shown. */
-    transitionOnMount: PropTypes.bool,
+    _defineProperty(_assertThisInitialized(_this), "handleComplete", function () {
+      var current = _this.state.status;
 
-    /** Unmount the component (remove it from the DOM) when it is not shown. */
-    unmountOnHide: PropTypes.bool,
-  }
+      _invoke(_this.props, 'onComplete', null, _objectSpread({}, _this.props, {
+        status: current
+      }));
 
-  static defaultProps = {
-    animation: 'fade',
-    duration: 500,
-    visible: true,
-    mountOnShow: true,
-    transitionOnMount: false,
-    unmountOnHide: false,
-  }
+      if (_this.nextStatus) {
+        _this.handleStart();
 
-  static ENTERED = 'ENTERED'
-  static ENTERING = 'ENTERING'
-  static EXITED = 'EXITED'
-  static EXITING = 'EXITING'
-  static UNMOUNTED = 'UNMOUNTED'
+        return;
+      }
 
-  static Group = TransitionGroup
+      var status = _this.computeCompletedStatus();
 
-  constructor(...args) {
-    super(...args)
+      var callback = current === Transition.ENTERING ? 'onShow' : 'onHide';
 
-    const { initial: status, next } = this.computeInitialStatuses()
-    this.nextStatus = next
-    this.state = { status }
-  }
+      _this.setState({
+        status: status,
+        animating: false
+      }, function () {
+        _invoke(_this.props, callback, null, _objectSpread({}, _this.props, {
+          status: status
+        }));
+      });
+    });
 
-  // ----------------------------------------
+    _defineProperty(_assertThisInitialized(_this), "updateStatus", function () {
+      var animating = _this.state.animating;
+
+      if (_this.nextStatus) {
+        _this.nextStatus = _this.computeNextStatus();
+        if (!animating) _this.handleStart();
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeClasses", function () {
+      var _this$props = _this.props,
+          animation = _this$props.animation,
+          directional = _this$props.directional,
+          children = _this$props.children;
+      var _this$state = _this.state,
+          animating = _this$state.animating,
+          status = _this$state.status;
+
+      var childClasses = _get(children, 'props.className');
+
+      var isDirectional = _isNil(directional) ? _includes(SUI.DIRECTIONAL_TRANSITIONS, animation) : directional;
+
+      if (isDirectional) {
+        return cx(animation, childClasses, useKeyOnly(animating, 'animating'), useKeyOnly(status === Transition.ENTERING, 'in'), useKeyOnly(status === Transition.EXITING, 'out'), useKeyOnly(status === Transition.EXITED, 'hidden'), useKeyOnly(status !== Transition.EXITED, 'visible'), 'transition');
+      }
+
+      return cx(animation, childClasses, useKeyOnly(animating, 'animating transition'));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeCompletedStatus", function () {
+      var unmountOnHide = _this.props.unmountOnHide;
+      var status = _this.state.status;
+      if (status === Transition.ENTERING) return Transition.ENTERED;
+      return unmountOnHide ? Transition.UNMOUNTED : Transition.EXITED;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeInitialStatuses", function () {
+      var _this$props2 = _this.props,
+          visible = _this$props2.visible,
+          mountOnShow = _this$props2.mountOnShow,
+          transitionOnMount = _this$props2.transitionOnMount,
+          unmountOnHide = _this$props2.unmountOnHide;
+
+      if (visible) {
+        if (transitionOnMount) {
+          return {
+            initial: Transition.EXITED,
+            next: Transition.ENTERING
+          };
+        }
+
+        return {
+          initial: Transition.ENTERED
+        };
+      }
+
+      if (mountOnShow || unmountOnHide) return {
+        initial: Transition.UNMOUNTED
+      };
+      return {
+        initial: Transition.EXITED
+      };
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeNextStatus", function () {
+      var _this$state2 = _this.state,
+          animating = _this$state2.animating,
+          status = _this$state2.status;
+      if (animating) return status === Transition.ENTERING ? Transition.EXITING : Transition.ENTERING;
+      return status === Transition.ENTERED ? Transition.EXITING : Transition.ENTERING;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeStatuses", function (props) {
+      var status = _this.state.status;
+      var visible = props.visible;
+
+      if (visible) {
+        return {
+          current: status === Transition.UNMOUNTED && Transition.EXITED,
+          next: status !== Transition.ENTERING && status !== Transition.ENTERED && Transition.ENTERING
+        };
+      }
+
+      return {
+        next: (status === Transition.ENTERING || status === Transition.ENTERED) && Transition.EXITING
+      };
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "computeStyle", function () {
+      var _this$props3 = _this.props,
+          children = _this$props3.children,
+          duration = _this$props3.duration;
+      var status = _this.state.status;
+
+      var childStyle = _get(children, 'props.style');
+
+      var type = TRANSITION_TYPE[status];
+      var animationDuration = type && "".concat(normalizeTransitionDuration(duration, type), "ms");
+      return _objectSpread({}, childStyle, {
+        animationDuration: animationDuration
+      });
+    });
+
+    var _this$computeInitialS = _this.computeInitialStatuses(),
+        _status = _this$computeInitialS.initial,
+        next = _this$computeInitialS.next;
+
+    _this.nextStatus = next;
+    _this.state = {
+      status: _status
+    };
+    return _this;
+  } // ----------------------------------------
   // Lifecycle
   // ----------------------------------------
 
-  componentDidMount() {
-    debug('componentDidMount()')
 
-    this.updateStatus()
-  }
+  _createClass(Transition, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateStatus();
+    } // eslint-disable-next-line camelcase
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    debug('componentWillReceiveProps()')
+  }, {
+    key: "UNSAFE_componentWillReceiveProps",
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
+      var _this$computeStatuses = this.computeStatuses(nextProps),
+          status = _this$computeStatuses.current,
+          next = _this$computeStatuses.next;
 
-    const { current: status, next } = this.computeStatuses(nextProps)
-
-    this.nextStatus = next
-    if (status) this.setState({ status })
-  }
-
-  componentDidUpdate() {
-    debug('componentDidUpdate()')
-
-    this.updateStatus()
-  }
-
-  componentWillUnmount() {
-    debug('componentWillUnmount()')
-
-    clearTimeout(this.timeoutId)
-  }
-
-  // ----------------------------------------
-  // Callback handling
-  // ----------------------------------------
-
-  handleStart = () => {
-    const { duration } = this.props
-    const status = this.nextStatus
-
-    this.nextStatus = null
-    this.setState({ status, animating: true }, () => {
-      const durationType = TRANSITION_TYPE[status]
-      const durationValue = normalizeTransitionDuration(duration, durationType)
-
-      _.invoke(this.props, 'onStart', null, { ...this.props, status })
-      this.timeoutId = setTimeout(this.handleComplete, durationValue)
-    })
-  }
-
-  handleComplete = () => {
-    const { status: current } = this.state
-
-    _.invoke(this.props, 'onComplete', null, { ...this.props, status: current })
-
-    if (this.nextStatus) {
-      this.handleStart()
-      return
+      this.nextStatus = next;
+      if (status) this.setState({
+        status: status
+      });
     }
-
-    const status = this.computeCompletedStatus()
-    const callback = current === Transition.ENTERING ? 'onShow' : 'onHide'
-
-    this.setState({ status, animating: false }, () => {
-      _.invoke(this.props, callback, null, { ...this.props, status })
-    })
-  }
-
-  updateStatus = () => {
-    const { animating } = this.state
-
-    if (this.nextStatus) {
-      this.nextStatus = this.computeNextStatus()
-      if (!animating) this.handleStart()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.updateStatus();
     }
-  }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearTimeout(this.timeoutId);
+    } // ----------------------------------------
+    // Callback handling
+    // ----------------------------------------
 
-  // ----------------------------------------
-  // Helpers
-  // ----------------------------------------
-
-  computeClasses = () => {
-    const { animation, directional, children } = this.props
-    const { animating, status } = this.state
-
-    const childClasses = _.get(children, 'props.className')
-    const isDirectional = _.isNil(directional)
-      ? _.includes(SUI.DIRECTIONAL_TRANSITIONS, animation)
-      : directional
-
-    if (isDirectional) {
-      return cx(
-        animation,
-        childClasses,
-        useKeyOnly(animating, 'animating'),
-        useKeyOnly(status === Transition.ENTERING, 'in'),
-        useKeyOnly(status === Transition.EXITING, 'out'),
-        useKeyOnly(status === Transition.EXITED, 'hidden'),
-        useKeyOnly(status !== Transition.EXITED, 'visible'),
-        'transition',
-      )
+  }, {
+    key: "render",
+    // ----------------------------------------
+    // Render
+    // ----------------------------------------
+    value: function render() {
+      var children = this.props.children;
+      var status = this.state.status;
+      if (status === Transition.UNMOUNTED) return null;
+      return cloneElement(children, {
+        className: this.computeClasses(),
+        style: this.computeStyle()
+      });
     }
+  }]);
 
-    return cx(animation, childClasses, useKeyOnly(animating, 'animating transition'))
-  }
+  return Transition;
+}(Component);
 
-  computeCompletedStatus = () => {
-    const { unmountOnHide } = this.props
-    const { status } = this.state
+_defineProperty(Transition, "defaultProps", {
+  animation: 'fade',
+  duration: 500,
+  visible: true,
+  mountOnShow: true,
+  transitionOnMount: false,
+  unmountOnHide: false
+});
 
-    if (status === Transition.ENTERING) return Transition.ENTERED
-    return unmountOnHide ? Transition.UNMOUNTED : Transition.EXITED
-  }
+_defineProperty(Transition, "ENTERED", 'ENTERED');
 
-  computeInitialStatuses = () => {
-    const { visible, mountOnShow, transitionOnMount, unmountOnHide } = this.props
+_defineProperty(Transition, "ENTERING", 'ENTERING');
 
-    if (visible) {
-      if (transitionOnMount) {
-        return {
-          initial: Transition.EXITED,
-          next: Transition.ENTERING,
-        }
-      }
-      return { initial: Transition.ENTERED }
-    }
+_defineProperty(Transition, "EXITED", 'EXITED');
 
-    if (mountOnShow || unmountOnHide) return { initial: Transition.UNMOUNTED }
-    return { initial: Transition.EXITED }
-  }
+_defineProperty(Transition, "EXITING", 'EXITING');
 
-  computeNextStatus = () => {
-    const { animating, status } = this.state
+_defineProperty(Transition, "UNMOUNTED", 'UNMOUNTED');
 
-    if (animating) return status === Transition.ENTERING ? Transition.EXITING : Transition.ENTERING
-    return status === Transition.ENTERED ? Transition.EXITING : Transition.ENTERING
-  }
+_defineProperty(Transition, "Group", TransitionGroup);
 
-  computeStatuses = (props) => {
-    const { status } = this.state
-    const { visible } = props
+_defineProperty(Transition, "handledProps", ["animation", "children", "directional", "duration", "mountOnShow", "onComplete", "onHide", "onShow", "onStart", "reactKey", "transitionOnMount", "unmountOnHide", "visible"]);
 
-    if (visible) {
-      return {
-        current: status === Transition.UNMOUNTED && Transition.EXITED,
-        next:
-          status !== Transition.ENTERING && status !== Transition.ENTERED && Transition.ENTERING,
-      }
-    }
+export { Transition as default };
+Transition.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** Named animation event to used. Must be defined in CSS. */
+  animation: PropTypes.oneOfType([PropTypes.oneOf(SUI.TRANSITIONS), PropTypes.string]),
 
-    return {
-      next: (status === Transition.ENTERING || status === Transition.ENTERED) && Transition.EXITING,
-    }
-  }
+  /** Primary content. */
+  children: PropTypes.element.isRequired,
 
-  computeStyle = () => {
-    const { children, duration } = this.props
-    const { status } = this.state
+  /** Whether it is directional animation event or not. Use it only for custom transitions. */
+  directional: PropTypes.bool,
 
-    const childStyle = _.get(children, 'props.style')
-    const type = TRANSITION_TYPE[status]
-    const animationDuration = type && `${normalizeTransitionDuration(duration, type)}ms`
+  /** Duration of the CSS transition animation in milliseconds. */
+  duration: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+    hide: PropTypes.number,
+    show: PropTypes.number
+  }), PropTypes.string]),
 
-    return { ...childStyle, animationDuration }
-  }
+  /** Show the component; triggers the enter or exit animation. */
+  visible: PropTypes.bool,
 
-  // ----------------------------------------
-  // Render
-  // ----------------------------------------
+  /** Wait until the first "enter" transition to mount the component (add it to the DOM). */
+  mountOnShow: PropTypes.bool,
 
-  render() {
-    debug('render()')
-    debug('props', this.props)
-    debug('state', this.state)
+  /**
+   * Callback on each transition that changes visibility to shown.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onComplete: PropTypes.func,
 
-    const { children } = this.props
-    const { status } = this.state
+  /**
+   * Callback on each transition that changes visibility to hidden.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onHide: PropTypes.func,
 
-    if (status === Transition.UNMOUNTED) return null
-    return cloneElement(children, {
-      className: this.computeClasses(),
-      style: this.computeStyle(),
-    })
-  }
-}
+  /**
+   * Callback on each transition that changes visibility to shown.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onShow: PropTypes.func,
+
+  /**
+   * Callback on animation start.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onStart: PropTypes.func,
+
+  /** React's key of the element. */
+  reactKey: PropTypes.string,
+
+  /** Run the enter animation when the component mounts, if it is initially shown. */
+  transitionOnMount: PropTypes.bool,
+
+  /** Unmount the component (remove it from the DOM) when it is not shown. */
+  unmountOnHide: PropTypes.bool
+} : {};

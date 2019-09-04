@@ -1,1 +1,2 @@
-export default from './Reveal'
+import _default from './Reveal';
+export { _default as default };

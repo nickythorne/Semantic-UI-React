@@ -1,1 +1,2 @@
-export default from './Table'
+import _default from './Table';
+export { _default as default };

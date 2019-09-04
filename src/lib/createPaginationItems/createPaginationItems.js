@@ -1,13 +1,7 @@
-import {
-  createFirstPage,
-  createLastItem,
-  createNextItem,
-  createPageFactory,
-  createPrevItem,
-} from './itemFactories'
-import { createComplexRange, createSimpleRange } from './rangeFactories'
-import { isSimplePagination, typifyOptions } from './paginationUtils'
-
+import _toConsumableArray from "@babel/runtime/helpers/toConsumableArray";
+import { createFirstPage, createLastItem, createNextItem, createPageFactory, createPrevItem } from './itemFactories';
+import { createComplexRange, createSimpleRange } from './rangeFactories';
+import { isSimplePagination, typifyOptions } from './paginationUtils';
 /**
  * @param {object} rawOptions
  * @param {number|string} rawOptions.activePage
@@ -16,22 +10,14 @@ import { isSimplePagination, typifyOptions } from './paginationUtils'
  * @param {number|string} rawOptions.siblingRange Number of always visible pages before and after the current one.
  * @param {number|string} rawOptions.totalPages Total number of pages.
  */
-const createPaginationItems = (rawOptions) => {
-  const options = typifyOptions(rawOptions)
-  const { activePage, totalPages } = options
 
-  const pageFactory = createPageFactory(activePage)
-  const innerRange = isSimplePagination(options)
-    ? createSimpleRange(1, totalPages, pageFactory)
-    : createComplexRange(options, pageFactory)
+var createPaginationItems = function createPaginationItems(rawOptions) {
+  var options = typifyOptions(rawOptions);
+  var activePage = options.activePage,
+      totalPages = options.totalPages;
+  var pageFactory = createPageFactory(activePage);
+  var innerRange = isSimplePagination(options) ? createSimpleRange(1, totalPages, pageFactory) : createComplexRange(options, pageFactory);
+  return [createFirstPage(), createPrevItem(activePage)].concat(_toConsumableArray(innerRange), [createNextItem(activePage, totalPages), createLastItem(totalPages)]);
+};
 
-  return [
-    createFirstPage(),
-    createPrevItem(activePage),
-    ...innerRange,
-    createNextItem(activePage, totalPages),
-    createLastItem(totalPages),
-  ]
-}
-
-export default createPaginationItems
+export default createPaginationItems;

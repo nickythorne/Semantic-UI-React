@@ -1,39 +1,28 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
 /**
  * A content sub-component for the Reveal.
  */
+
 function RevealContent(props) {
-  const { children, className, content, hidden, visible } = props
-
-  const classes = cx(
-    'ui',
-    useKeyOnly(hidden, 'hidden'),
-    useKeyOnly(visible, 'visible'),
-    'content',
-    className,
-  )
-  const rest = getUnhandledProps(RevealContent, props)
-  const ElementType = getElementType(RevealContent, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      hidden = props.hidden,
+      visible = props.visible;
+  var classes = cx('ui', useKeyOnly(hidden, 'hidden'), useKeyOnly(visible, 'visible'), 'content', className);
+  var rest = getUnhandledProps(RevealContent, props);
+  var ElementType = getElementType(RevealContent, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-RevealContent.propTypes = {
+RevealContent.handledProps = ["as", "children", "className", "content", "hidden", "visible"];
+RevealContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -50,7 +39,6 @@ RevealContent.propTypes = {
   hidden: PropTypes.bool,
 
   /** A reveal may contain content that is hidden before user interaction. */
-  visible: PropTypes.bool,
-}
-
-export default RevealContent
+  visible: PropTypes.bool
+} : {};
+export default RevealContent;

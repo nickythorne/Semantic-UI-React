@@ -1,51 +1,62 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+"use strict";
 
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-import MessageItem from './MessageItem'
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _map2 = _interopRequireDefault(require("lodash/map"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _lib = require("../../lib");
+
+var _MessageItem = _interopRequireDefault(require("./MessageItem"));
 
 /**
  * A message can contain a list of items.
  */
 function MessageList(props) {
-  const { children, className, items } = props
-  const classes = cx('list', className)
-  const rest = getUnhandledProps(MessageList, props)
-  const ElementType = getElementType(MessageList, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? _.map(items, MessageItem.create) : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      items = props.items;
+  var classes = (0, _classnames["default"])('list', className);
+  var rest = (0, _lib.getUnhandledProps)(MessageList, props);
+  var ElementType = (0, _lib.getElementType)(MessageList, props);
+  return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+    className: classes
+  }), _lib.childrenUtils.isNil(children) ? (0, _map2["default"])(items, _MessageItem["default"].create) : children);
 }
 
-MessageList.propTypes = {
+MessageList.handledProps = ["as", "children", "className", "items"];
+MessageList.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
-  as: PropTypes.elementType,
+  as: _propTypes["default"].elementType,
 
   /** Primary content. */
-  children: PropTypes.node,
+  children: _propTypes["default"].node,
 
   /** Additional classes. */
-  className: PropTypes.string,
+  className: _propTypes["default"].string,
 
   /** Shorthand Message.Items. */
-  items: customPropTypes.collectionShorthand,
-}
-
+  items: _lib.customPropTypes.collectionShorthand
+} : {};
 MessageList.defaultProps = {
-  as: 'ul',
-}
-
-MessageList.create = createShorthandFactory(MessageList, (val) => ({ items: val }))
-
-export default MessageList
+  as: 'ul'
+};
+MessageList.create = (0, _lib.createShorthandFactory)(MessageList, function (val) {
+  return {
+    items: val
+  };
+});
+var _default = MessageList;
+exports["default"] = _default;

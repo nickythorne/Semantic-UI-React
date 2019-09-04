@@ -1,26 +1,26 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * A menu item may include a header or may itself be a header.
  */
-function MenuHeader(props) {
-  const { children, className, content } = props
-  const classes = cx('header', className)
-  const rest = getUnhandledProps(MenuHeader, props)
-  const ElementType = getElementType(MenuHeader, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function MenuHeader(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('header', className);
+  var rest = getUnhandledProps(MenuHeader, props);
+  var ElementType = getElementType(MenuHeader, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-MenuHeader.propTypes = {
+MenuHeader.handledProps = ["as", "children", "className", "content"];
+MenuHeader.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -31,7 +31,6 @@ MenuHeader.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-export default MenuHeader
+  content: customPropTypes.contentShorthand
+} : {};
+export default MenuHeader;

@@ -1,52 +1,62 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI } from '../../lib'
-import FeedContent from './FeedContent'
-import FeedDate from './FeedDate'
-import FeedEvent from './FeedEvent'
-import FeedExtra from './FeedExtra'
-import FeedLabel from './FeedLabel'
-import FeedLike from './FeedLike'
-import FeedMeta from './FeedMeta'
-import FeedSummary from './FeedSummary'
-import FeedUser from './FeedUser'
-
+import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import _map from "lodash/map";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI } from '../../lib';
+import FeedContent from './FeedContent';
+import FeedDate from './FeedDate';
+import FeedEvent from './FeedEvent';
+import FeedExtra from './FeedExtra';
+import FeedLabel from './FeedLabel';
+import FeedLike from './FeedLike';
+import FeedMeta from './FeedMeta';
+import FeedSummary from './FeedSummary';
+import FeedUser from './FeedUser';
 /**
  * A feed presents user activity chronologically.
  */
-function Feed(props) {
-  const { children, className, events, size } = props
 
-  const classes = cx('ui', size, 'feed', className)
-  const rest = getUnhandledProps(Feed, props)
-  const ElementType = getElementType(Feed, props)
+function Feed(props) {
+  var children = props.children,
+      className = props.className,
+      events = props.events,
+      size = props.size;
+  var classes = cx('ui', size, 'feed', className);
+  var rest = getUnhandledProps(Feed, props);
+  var ElementType = getElementType(Feed, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  const eventElements = _.map(events, (eventProps) => {
-    const { childKey, date, meta, summary, ...eventData } = eventProps
-    const finalKey = childKey || [date, meta, summary].join('-')
+  var eventElements = _map(events, function (eventProps) {
+    var childKey = eventProps.childKey,
+        date = eventProps.date,
+        meta = eventProps.meta,
+        summary = eventProps.summary,
+        eventData = _objectWithoutProperties(eventProps, ["childKey", "date", "meta", "summary"]);
 
-    return <FeedEvent date={date} key={finalKey} meta={meta} summary={summary} {...eventData} />
-  })
+    var finalKey = childKey || [date, meta, summary].join('-');
+    return React.createElement(FeedEvent, _extends({
+      date: date,
+      key: finalKey,
+      meta: meta,
+      summary: summary
+    }, eventData));
+  });
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {eventElements}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), eventElements);
 }
 
-Feed.propTypes = {
+Feed.handledProps = ["as", "children", "className", "events", "size"];
+Feed.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -60,17 +70,15 @@ Feed.propTypes = {
   events: customPropTypes.collectionShorthand,
 
   /** A feed can have different sizes. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'mini', 'tiny', 'medium', 'big', 'huge', 'massive')),
-}
-
-Feed.Content = FeedContent
-Feed.Date = FeedDate
-Feed.Event = FeedEvent
-Feed.Extra = FeedExtra
-Feed.Label = FeedLabel
-Feed.Like = FeedLike
-Feed.Meta = FeedMeta
-Feed.Summary = FeedSummary
-Feed.User = FeedUser
-
-export default Feed
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'mini', 'tiny', 'medium', 'big', 'huge', 'massive'))
+} : {};
+Feed.Content = FeedContent;
+Feed.Date = FeedDate;
+Feed.Event = FeedEvent;
+Feed.Extra = FeedExtra;
+Feed.Label = FeedLabel;
+Feed.Like = FeedLike;
+Feed.Meta = FeedMeta;
+Feed.Summary = FeedSummary;
+Feed.User = FeedUser;
+export default Feed;

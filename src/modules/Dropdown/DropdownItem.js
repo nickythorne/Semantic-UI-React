@@ -1,159 +1,184 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-
-import {
-  childrenUtils,
-  createShorthand,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-import Flag from '../../elements/Flag'
-import Icon from '../../elements/Icon'
-import Image from '../../elements/Image'
-import Label from '../../elements/Label'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _createClass from "@babel/runtime/helpers/createClass";
+import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
+import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _isNil from "lodash/isNil";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { childrenUtils, createShorthand, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
+import Flag from '../../elements/Flag';
+import Icon from '../../elements/Icon';
+import Image from '../../elements/Image';
+import Label from '../../elements/Label';
 /**
  * An item sub-component for Dropdown component.
  */
-class DropdownItem extends Component {
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: PropTypes.elementType,
 
-    /** Style as the currently chosen item. */
-    active: PropTypes.bool,
+var DropdownItem =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(DropdownItem, _Component);
 
-    /** Primary content. */
-    children: PropTypes.node,
+  function DropdownItem() {
+    var _getPrototypeOf2;
 
-    /** Additional classes. */
-    className: PropTypes.string,
+    var _this;
 
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
+    _classCallCheck(this, DropdownItem);
 
-    /** Additional text with less emphasis. */
-    description: customPropTypes.itemShorthand,
-
-    /** A dropdown item can be disabled. */
-    disabled: PropTypes.bool,
-
-    /** Shorthand for Flag. */
-    flag: customPropTypes.itemShorthand,
-
-    /** Shorthand for Icon. */
-    icon: customPropTypes.itemShorthand,
-
-    /** Shorthand for Image. */
-    image: customPropTypes.itemShorthand,
-
-    /** Shorthand for Label. */
-    label: customPropTypes.itemShorthand,
-
-    /**
-     * Called on click.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
-
-    /**
-     * The item currently selected by keyboard shortcut.
-     * This is not the active item.
-     */
-    selected: PropTypes.bool,
-
-    /** Display text. */
-    text: customPropTypes.contentShorthand,
-
-    /** Stored value. */
-    value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string]),
-  }
-
-  handleClick = (e) => {
-    const { onClick } = this.props
-
-    if (onClick) onClick(e, this.props)
-  }
-
-  render() {
-    const {
-      active,
-      children,
-      className,
-      content,
-      disabled,
-      description,
-      flag,
-      icon,
-      image,
-      label,
-      selected,
-      text,
-    } = this.props
-
-    const classes = cx(
-      useKeyOnly(active, 'active'),
-      useKeyOnly(disabled, 'disabled'),
-      useKeyOnly(selected, 'selected'),
-      'item',
-      className,
-    )
-    // add default dropdown icon if item contains another menu
-    const iconName = _.isNil(icon)
-      ? childrenUtils.someByType(children, 'DropdownMenu') && 'dropdown'
-      : icon
-    const rest = getUnhandledProps(DropdownItem, this.props)
-    const ElementType = getElementType(DropdownItem, this.props)
-    const ariaOptions = {
-      role: 'option',
-      'aria-disabled': disabled,
-      'aria-checked': active,
-      'aria-selected': selected,
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    if (!childrenUtils.isNil(children)) {
-      return (
-        <ElementType {...rest} {...ariaOptions} className={classes} onClick={this.handleClick}>
-          {children}
-        </ElementType>
-      )
-    }
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropdownItem)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    const flagElement = Flag.create(flag, { autoGenerateKey: false })
-    const iconElement = Icon.create(iconName, { autoGenerateKey: false })
-    const imageElement = Image.create(image, { autoGenerateKey: false })
-    const labelElement = Label.create(label, { autoGenerateKey: false })
-    const descriptionElement = createShorthand('span', (val) => ({ children: val }), description, {
-      defaultProps: { className: 'description' },
-      autoGenerateKey: false,
-    })
-    const textElement = createShorthand(
-      'span',
-      (val) => ({ children: val }),
-      childrenUtils.isNil(content) ? text : content,
-      { defaultProps: { className: 'text' }, autoGenerateKey: false },
-    )
+    _defineProperty(_assertThisInitialized(_this), "handleClick", function (e) {
+      var onClick = _this.props.onClick;
+      if (onClick) onClick(e, _this.props);
+    });
 
-    return (
-      <ElementType {...rest} {...ariaOptions} className={classes} onClick={this.handleClick}>
-        {imageElement}
-        {iconElement}
-        {flagElement}
-        {labelElement}
-        {descriptionElement}
-        {textElement}
-      </ElementType>
-    )
+    return _this;
   }
-}
 
-DropdownItem.create = createShorthandFactory(DropdownItem, (opts) => opts)
+  _createClass(DropdownItem, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          active = _this$props.active,
+          children = _this$props.children,
+          className = _this$props.className,
+          content = _this$props.content,
+          disabled = _this$props.disabled,
+          description = _this$props.description,
+          flag = _this$props.flag,
+          icon = _this$props.icon,
+          image = _this$props.image,
+          label = _this$props.label,
+          selected = _this$props.selected,
+          text = _this$props.text;
+      var classes = cx(useKeyOnly(active, 'active'), useKeyOnly(disabled, 'disabled'), useKeyOnly(selected, 'selected'), 'item', className); // add default dropdown icon if item contains another menu
 
-export default DropdownItem
+      var iconName = _isNil(icon) ? childrenUtils.someByType(children, 'DropdownMenu') && 'dropdown' : icon;
+      var rest = getUnhandledProps(DropdownItem, this.props);
+      var ElementType = getElementType(DropdownItem, this.props);
+      var ariaOptions = {
+        role: 'option',
+        'aria-disabled': disabled,
+        'aria-checked': active,
+        'aria-selected': selected
+      };
+
+      if (!childrenUtils.isNil(children)) {
+        return React.createElement(ElementType, _extends({}, rest, ariaOptions, {
+          className: classes,
+          onClick: this.handleClick
+        }), children);
+      }
+
+      var flagElement = Flag.create(flag, {
+        autoGenerateKey: false
+      });
+      var iconElement = Icon.create(iconName, {
+        autoGenerateKey: false
+      });
+      var imageElement = Image.create(image, {
+        autoGenerateKey: false
+      });
+      var labelElement = Label.create(label, {
+        autoGenerateKey: false
+      });
+      var descriptionElement = createShorthand('span', function (val) {
+        return {
+          children: val
+        };
+      }, description, {
+        defaultProps: {
+          className: 'description'
+        },
+        autoGenerateKey: false
+      });
+      var textElement = createShorthand('span', function (val) {
+        return {
+          children: val
+        };
+      }, childrenUtils.isNil(content) ? text : content, {
+        defaultProps: {
+          className: 'text'
+        },
+        autoGenerateKey: false
+      });
+      return React.createElement(ElementType, _extends({}, rest, ariaOptions, {
+        className: classes,
+        onClick: this.handleClick
+      }), imageElement, iconElement, flagElement, labelElement, descriptionElement, textElement);
+    }
+  }]);
+
+  return DropdownItem;
+}(Component);
+
+_defineProperty(DropdownItem, "handledProps", ["active", "as", "children", "className", "content", "description", "disabled", "flag", "icon", "image", "label", "onClick", "selected", "text", "value"]);
+
+DropdownItem.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** An element type to render as (string or function). */
+  as: PropTypes.elementType,
+
+  /** Style as the currently chosen item. */
+  active: PropTypes.bool,
+
+  /** Primary content. */
+  children: PropTypes.node,
+
+  /** Additional classes. */
+  className: PropTypes.string,
+
+  /** Shorthand for primary content. */
+  content: customPropTypes.contentShorthand,
+
+  /** Additional text with less emphasis. */
+  description: customPropTypes.itemShorthand,
+
+  /** A dropdown item can be disabled. */
+  disabled: PropTypes.bool,
+
+  /** Shorthand for Flag. */
+  flag: customPropTypes.itemShorthand,
+
+  /** Shorthand for Icon. */
+  icon: customPropTypes.itemShorthand,
+
+  /** Shorthand for Image. */
+  image: customPropTypes.itemShorthand,
+
+  /** Shorthand for Label. */
+  label: customPropTypes.itemShorthand,
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick: PropTypes.func,
+
+  /**
+   * The item currently selected by keyboard shortcut.
+   * This is not the active item.
+   */
+  selected: PropTypes.bool,
+
+  /** Display text. */
+  text: customPropTypes.contentShorthand,
+
+  /** Stored value. */
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string])
+} : {};
+DropdownItem.create = createShorthandFactory(DropdownItem, function (opts) {
+  return opts;
+});
+export default DropdownItem;

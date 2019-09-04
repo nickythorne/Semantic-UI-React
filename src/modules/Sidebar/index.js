@@ -1,1 +1,2 @@
-export default from './Sidebar'
+import _default from './Sidebar';
+export { _default as default };

@@ -1,27 +1,28 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI } from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI } from '../../lib';
 /**
  * Several icons can be used together as a group.
  */
-function IconGroup(props) {
-  const { children, className, content, size } = props
-  const classes = cx(size, 'icons', className)
-  const rest = getUnhandledProps(IconGroup, props)
-  const ElementType = getElementType(IconGroup, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function IconGroup(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      size = props.size;
+  var classes = cx(size, 'icons', className);
+  var rest = getUnhandledProps(IconGroup, props);
+  var ElementType = getElementType(IconGroup, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-IconGroup.propTypes = {
+IconGroup.handledProps = ["as", "children", "className", "content", "size"];
+IconGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -35,11 +36,9 @@ IconGroup.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** Size of the icon group. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'medium')),
-}
-
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'medium'))
+} : {};
 IconGroup.defaultProps = {
-  as: 'i',
-}
-
-export default IconGroup
+  as: 'i'
+};
+export default IconGroup;

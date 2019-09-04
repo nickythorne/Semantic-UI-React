@@ -1,19 +1,26 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-
-import { getElementType, getUnhandledProps, SUI, useKeyOnly, useWidthProp } from '../../lib'
-import FormButton from './FormButton'
-import FormCheckbox from './FormCheckbox'
-import FormDropdown from './FormDropdown'
-import FormField from './FormField'
-import FormGroup from './FormGroup'
-import FormInput from './FormInput'
-import FormRadio from './FormRadio'
-import FormSelect from './FormSelect'
-import FormTextArea from './FormTextArea'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _createClass from "@babel/runtime/helpers/createClass";
+import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
+import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _invoke from "lodash/invoke";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { getElementType, getUnhandledProps, SUI, useKeyOnly, useWidthProp } from '../../lib';
+import FormButton from './FormButton';
+import FormCheckbox from './FormCheckbox';
+import FormDropdown from './FormDropdown';
+import FormField from './FormField';
+import FormGroup from './FormGroup';
+import FormInput from './FormInput';
+import FormRadio from './FormRadio';
+import FormSelect from './FormSelect';
+import FormTextArea from './FormTextArea';
 /**
  * A Form displays a set of related user input fields in a structured way.
  * @see Button
@@ -25,113 +32,136 @@ import FormTextArea from './FormTextArea'
  * @see Select
  * @see Visibility
  */
-class Form extends Component {
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: PropTypes.elementType,
 
-    /** The HTML form action */
-    action: PropTypes.string,
+var Form =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Form, _Component);
 
-    /** Primary content. */
-    children: PropTypes.node,
+  function Form() {
+    var _getPrototypeOf2;
 
-    /** Additional classes. */
-    className: PropTypes.string,
+    var _this;
 
-    /** Automatically show any error Message children. */
-    error: PropTypes.bool,
+    _classCallCheck(this, Form);
 
-    /** A form can have its color inverted for contrast. */
-    inverted: PropTypes.bool,
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
 
-    /** Automatically show a loading indicator. */
-    loading: PropTypes.bool,
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Form)).call.apply(_getPrototypeOf2, [this].concat(_args)));
 
-    /** The HTML form submit handler. */
-    onSubmit: PropTypes.func,
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
+      var action = _this.props.action; // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
+      // method.
 
-    /** A comment can contain a form to reply to a comment. This may have arbitrary content. */
-    reply: PropTypes.bool,
+      if (typeof action !== 'string') _invoke(e, 'preventDefault');
 
-    /** A form can vary in size. */
-    size: PropTypes.oneOf(_.without(SUI.SIZES, 'medium')),
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
 
-    /** Automatically show any success Message children. */
-    success: PropTypes.bool,
+      _invoke.apply(void 0, [_this.props, 'onSubmit', e, _this.props].concat(args));
+    });
 
-    /** A form can prevent itself from stacking on mobile. */
-    unstackable: PropTypes.bool,
-
-    /** Automatically show any warning Message children. */
-    warning: PropTypes.bool,
-
-    /** Forms can automatically divide fields to be equal width. */
-    widths: PropTypes.oneOf(['equal']),
+    return _this;
   }
 
-  static defaultProps = {
-    as: 'form',
-  }
+  _createClass(Form, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          action = _this$props.action,
+          children = _this$props.children,
+          className = _this$props.className,
+          error = _this$props.error,
+          inverted = _this$props.inverted,
+          loading = _this$props.loading,
+          reply = _this$props.reply,
+          size = _this$props.size,
+          success = _this$props.success,
+          unstackable = _this$props.unstackable,
+          warning = _this$props.warning,
+          widths = _this$props.widths;
+      var classes = cx('ui', size, useKeyOnly(error, 'error'), useKeyOnly(inverted, 'inverted'), useKeyOnly(loading, 'loading'), useKeyOnly(reply, 'reply'), useKeyOnly(success, 'success'), useKeyOnly(unstackable, 'unstackable'), useKeyOnly(warning, 'warning'), useWidthProp(widths, null, true), 'form', className);
+      var rest = getUnhandledProps(Form, this.props);
+      var ElementType = getElementType(Form, this.props);
+      return React.createElement(ElementType, _extends({}, rest, {
+        action: action,
+        className: classes,
+        onSubmit: this.handleSubmit
+      }), children);
+    }
+  }]);
 
-  static Field = FormField
-  static Button = FormButton
-  static Checkbox = FormCheckbox
-  static Dropdown = FormDropdown
-  static Group = FormGroup
-  static Input = FormInput
-  static Radio = FormRadio
-  static Select = FormSelect
-  static TextArea = FormTextArea
+  return Form;
+}(Component);
 
-  handleSubmit = (e, ...args) => {
-    const { action } = this.props
+_defineProperty(Form, "defaultProps", {
+  as: 'form'
+});
 
-    // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
-    // method.
-    if (typeof action !== 'string') _.invoke(e, 'preventDefault')
-    _.invoke(this.props, 'onSubmit', e, this.props, ...args)
-  }
+_defineProperty(Form, "Field", FormField);
 
-  render() {
-    const {
-      action,
-      children,
-      className,
-      error,
-      inverted,
-      loading,
-      reply,
-      size,
-      success,
-      unstackable,
-      warning,
-      widths,
-    } = this.props
+_defineProperty(Form, "Button", FormButton);
 
-    const classes = cx(
-      'ui',
-      size,
-      useKeyOnly(error, 'error'),
-      useKeyOnly(inverted, 'inverted'),
-      useKeyOnly(loading, 'loading'),
-      useKeyOnly(reply, 'reply'),
-      useKeyOnly(success, 'success'),
-      useKeyOnly(unstackable, 'unstackable'),
-      useKeyOnly(warning, 'warning'),
-      useWidthProp(widths, null, true),
-      'form',
-      className,
-    )
-    const rest = getUnhandledProps(Form, this.props)
-    const ElementType = getElementType(Form, this.props)
+_defineProperty(Form, "Checkbox", FormCheckbox);
 
-    return (
-      <ElementType {...rest} action={action} className={classes} onSubmit={this.handleSubmit}>
-        {children}
-      </ElementType>
-    )
-  }
-}
+_defineProperty(Form, "Dropdown", FormDropdown);
 
-export default Form
+_defineProperty(Form, "Group", FormGroup);
+
+_defineProperty(Form, "Input", FormInput);
+
+_defineProperty(Form, "Radio", FormRadio);
+
+_defineProperty(Form, "Select", FormSelect);
+
+_defineProperty(Form, "TextArea", FormTextArea);
+
+_defineProperty(Form, "handledProps", ["action", "as", "children", "className", "error", "inverted", "loading", "onSubmit", "reply", "size", "success", "unstackable", "warning", "widths"]);
+
+Form.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** An element type to render as (string or function). */
+  as: PropTypes.elementType,
+
+  /** The HTML form action */
+  action: PropTypes.string,
+
+  /** Primary content. */
+  children: PropTypes.node,
+
+  /** Additional classes. */
+  className: PropTypes.string,
+
+  /** Automatically show any error Message children. */
+  error: PropTypes.bool,
+
+  /** A form can have its color inverted for contrast. */
+  inverted: PropTypes.bool,
+
+  /** Automatically show a loading indicator. */
+  loading: PropTypes.bool,
+
+  /** The HTML form submit handler. */
+  onSubmit: PropTypes.func,
+
+  /** A comment can contain a form to reply to a comment. This may have arbitrary content. */
+  reply: PropTypes.bool,
+
+  /** A form can vary in size. */
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'medium')),
+
+  /** Automatically show any success Message children. */
+  success: PropTypes.bool,
+
+  /** A form can prevent itself from stacking on mobile. */
+  unstackable: PropTypes.bool,
+
+  /** Automatically show any warning Message children. */
+  warning: PropTypes.bool,
+
+  /** Forms can automatically divide fields to be equal width. */
+  widths: PropTypes.oneOf(['equal'])
+} : {};
+export default Form;

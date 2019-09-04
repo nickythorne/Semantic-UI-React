@@ -1,1 +1,2 @@
-export default from './Modal'
+import _default from './Modal';
+export { _default as default };

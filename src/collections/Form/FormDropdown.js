@@ -1,34 +1,34 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getElementType, getUnhandledProps } from '../../lib'
-import Dropdown from '../../modules/Dropdown'
-import FormField from './FormField'
-
+import _extends from "@babel/runtime/helpers/extends";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getElementType, getUnhandledProps } from '../../lib';
+import Dropdown from '../../modules/Dropdown';
+import FormField from './FormField';
 /**
  * Sugar for <Form.Field control={Dropdown} />.
  * @see Dropdown
  * @see Form
  */
-function FormDropdown(props) {
-  const { control } = props
-  const rest = getUnhandledProps(FormDropdown, props)
-  const ElementType = getElementType(FormDropdown, props)
 
-  return <ElementType {...rest} control={control} />
+function FormDropdown(props) {
+  var control = props.control;
+  var rest = getUnhandledProps(FormDropdown, props);
+  var ElementType = getElementType(FormDropdown, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    control: control
+  }));
 }
 
-FormDropdown.propTypes = {
+FormDropdown.handledProps = ["as", "control"];
+FormDropdown.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** A FormField control prop. */
-  control: FormField.propTypes.control,
-}
-
+  control: FormField.propTypes.control
+} : {};
 FormDropdown.defaultProps = {
   as: FormField,
-  control: Dropdown,
-}
-
-export default FormDropdown
+  control: Dropdown
+};
+export default FormDropdown;

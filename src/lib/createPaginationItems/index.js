@@ -1,1 +1,2 @@
-export default from './createPaginationItems'
+import _default from './createPaginationItems';
+export { _default as default };

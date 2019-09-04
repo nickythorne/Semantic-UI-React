@@ -1,34 +1,27 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
 /**
  * A statistic can contain a numeric, icon, image, or text value.
  */
+
 function StatisticValue(props) {
-  const { children, className, content, text } = props
-
-  const classes = cx(useKeyOnly(text, 'text'), 'value', className)
-  const rest = getUnhandledProps(StatisticValue, props)
-  const ElementType = getElementType(StatisticValue, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      text = props.text;
+  var classes = cx(useKeyOnly(text, 'text'), 'value', className);
+  var rest = getUnhandledProps(StatisticValue, props);
+  var ElementType = getElementType(StatisticValue, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-StatisticValue.propTypes = {
+StatisticValue.handledProps = ["as", "children", "className", "content", "text"];
+StatisticValue.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -42,9 +35,11 @@ StatisticValue.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** Format the value with smaller font size to fit nicely beside number values. */
-  text: PropTypes.bool,
-}
-
-StatisticValue.create = createShorthandFactory(StatisticValue, (content) => ({ content }))
-
-export default StatisticValue
+  text: PropTypes.bool
+} : {};
+StatisticValue.create = createShorthandFactory(StatisticValue, function (content) {
+  return {
+    content: content
+  };
+});
+export default StatisticValue;

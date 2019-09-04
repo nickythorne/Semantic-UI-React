@@ -1,46 +1,56 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { createShorthand, customPropTypes, getElementType, getUnhandledProps } from '../../lib'
-import FeedContent from './FeedContent'
-import FeedLabel from './FeedLabel'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { createShorthand, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
+import FeedContent from './FeedContent';
+import FeedLabel from './FeedLabel';
 /**
  * A feed contains an event.
  */
+
 function FeedEvent(props) {
-  const {
-    content,
-    children,
-    className,
-    date,
-    extraImages,
-    extraText,
-    image,
-    icon,
-    meta,
-    summary,
-  } = props
-
-  const classes = cx('event', className)
-  const rest = getUnhandledProps(FeedEvent, props)
-  const ElementType = getElementType(FeedEvent, props)
-
-  const hasContentProp = content || date || extraImages || extraText || meta || summary
-  const contentProps = { content, date, extraImages, extraText, meta, summary }
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {createShorthand(FeedLabel, (val) => ({ icon: val }), icon, { autoGenerateKey: false })}
-      {createShorthand(FeedLabel, (val) => ({ image: val }), image, { autoGenerateKey: false })}
-      {hasContentProp && <FeedContent {...contentProps} />}
-      {children}
-    </ElementType>
-  )
+  var content = props.content,
+      children = props.children,
+      className = props.className,
+      date = props.date,
+      extraImages = props.extraImages,
+      extraText = props.extraText,
+      image = props.image,
+      icon = props.icon,
+      meta = props.meta,
+      summary = props.summary;
+  var classes = cx('event', className);
+  var rest = getUnhandledProps(FeedEvent, props);
+  var ElementType = getElementType(FeedEvent, props);
+  var hasContentProp = content || date || extraImages || extraText || meta || summary;
+  var contentProps = {
+    content: content,
+    date: date,
+    extraImages: extraImages,
+    extraText: extraText,
+    meta: meta,
+    summary: summary
+  };
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), createShorthand(FeedLabel, function (val) {
+    return {
+      icon: val
+    };
+  }, icon, {
+    autoGenerateKey: false
+  }), createShorthand(FeedLabel, function (val) {
+    return {
+      image: val
+    };
+  }, image, {
+    autoGenerateKey: false
+  }), hasContentProp && React.createElement(FeedContent, contentProps), children);
 }
 
-FeedEvent.propTypes = {
+FeedEvent.handledProps = ["as", "children", "className", "content", "date", "extraImages", "extraText", "icon", "image", "meta", "summary"];
+FeedEvent.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -72,7 +82,6 @@ FeedEvent.propTypes = {
   meta: customPropTypes.itemShorthand,
 
   /** Shorthand for FeedSummary. */
-  summary: customPropTypes.itemShorthand,
-}
-
-export default FeedEvent
+  summary: customPropTypes.itemShorthand
+} : {};
+export default FeedEvent;

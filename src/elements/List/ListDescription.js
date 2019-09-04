@@ -1,32 +1,26 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * A list item can contain a description.
  */
-function ListDescription(props) {
-  const { children, className, content } = props
-  const classes = cx(className, 'description')
-  const rest = getUnhandledProps(ListDescription, props)
-  const ElementType = getElementType(ListDescription, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function ListDescription(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx(className, 'description');
+  var rest = getUnhandledProps(ListDescription, props);
+  var ElementType = getElementType(ListDescription, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-ListDescription.propTypes = {
+ListDescription.handledProps = ["as", "children", "className", "content"];
+ListDescription.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -37,9 +31,11 @@ ListDescription.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-ListDescription.create = createShorthandFactory(ListDescription, (content) => ({ content }))
-
-export default ListDescription
+  content: customPropTypes.contentShorthand
+} : {};
+ListDescription.create = createShorthandFactory(ListDescription, function (content) {
+  return {
+    content: content
+  };
+});
+export default ListDescription;

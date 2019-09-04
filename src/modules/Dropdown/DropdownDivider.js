@@ -1,27 +1,28 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getElementType, getUnhandledProps } from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getElementType, getUnhandledProps } from '../../lib';
 /**
  * A dropdown menu can contain dividers to separate related content.
  */
-function DropdownDivider(props) {
-  const { className } = props
-  const classes = cx('divider', className)
-  const rest = getUnhandledProps(DropdownDivider, props)
-  const ElementType = getElementType(DropdownDivider, props)
 
-  return <ElementType {...rest} className={classes} />
+function DropdownDivider(props) {
+  var className = props.className;
+  var classes = cx('divider', className);
+  var rest = getUnhandledProps(DropdownDivider, props);
+  var ElementType = getElementType(DropdownDivider, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }));
 }
 
-DropdownDivider.propTypes = {
+DropdownDivider.handledProps = ["as", "className"];
+DropdownDivider.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** Additional classes. */
-  className: PropTypes.string,
-}
-
-export default DropdownDivider
+  className: PropTypes.string
+} : {};
+export default DropdownDivider;

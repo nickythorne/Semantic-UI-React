@@ -1,144 +1,171 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-import Icon from '../Icon'
-import StepContent from './StepContent'
-import StepDescription from './StepDescription'
-import StepGroup from './StepGroup'
-import StepTitle from './StepTitle'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _createClass from "@babel/runtime/helpers/createClass";
+import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
+import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _invoke from "lodash/invoke";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
+import Icon from '../Icon';
+import StepContent from './StepContent';
+import StepDescription from './StepDescription';
+import StepGroup from './StepGroup';
+import StepTitle from './StepTitle';
 /**
  * A step shows the completion status of an activity in a series of activities.
  */
-class Step extends Component {
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: PropTypes.elementType,
 
-    /** A step can be highlighted as active. */
-    active: PropTypes.bool,
+var Step =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Step, _Component);
 
-    /** Primary content. */
-    children: PropTypes.node,
+  function Step() {
+    var _getPrototypeOf2;
 
-    /** Additional classes. */
-    className: PropTypes.string,
+    var _this;
 
-    /** A step can show that a user has completed it. */
-    completed: PropTypes.bool,
+    _classCallCheck(this, Step);
 
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Shorthand for StepDescription. */
-    description: customPropTypes.itemShorthand,
-
-    /** Show that the Loader is inactive. */
-    disabled: PropTypes.bool,
-
-    /** Render as an `a` tag instead of a `div` and adds the href attribute. */
-    href: PropTypes.string,
-
-    /** Shorthand for Icon. */
-    icon: customPropTypes.itemShorthand,
-
-    /** A step can be link. */
-    link: PropTypes.bool,
-
-    /**
-     * Called on click. When passed, the component will render as an `a`
-     * tag by default instead of a `div`.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
-
-    /** A step can show a ordered sequence of steps. Passed from StepGroup. */
-    ordered: PropTypes.bool,
-
-    /** Shorthand for StepTitle. */
-    title: customPropTypes.itemShorthand,
-  }
-
-  static Content = StepContent
-  static Description = StepDescription
-  static Group = StepGroup
-  static Title = StepTitle
-
-  computeElementType = () => {
-    const { onClick } = this.props
-
-    if (onClick) return 'a'
-  }
-
-  handleClick = (e) => {
-    const { disabled } = this.props
-
-    if (!disabled) _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  render() {
-    const {
-      active,
-      children,
-      className,
-      completed,
-      content,
-      description,
-      disabled,
-      href,
-      icon,
-      link,
-      title,
-    } = this.props
-
-    const classes = cx(
-      useKeyOnly(active, 'active'),
-      useKeyOnly(completed, 'completed'),
-      useKeyOnly(disabled, 'disabled'),
-      useKeyOnly(link, 'link'),
-      'step',
-      className,
-    )
-    const rest = getUnhandledProps(Step, this.props)
-    const ElementType = getElementType(Step, this.props, this.computeElementType)
-
-    if (!childrenUtils.isNil(children)) {
-      return (
-        <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>
-          {children}
-        </ElementType>
-      )
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    if (!childrenUtils.isNil(content)) {
-      return (
-        <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>
-          {content}
-        </ElementType>
-      )
-    }
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Step)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    return (
-      <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>
-        {Icon.create(icon, { autoGenerateKey: false })}
-        {StepContent.create({ description, title }, { autoGenerateKey: false })}
-      </ElementType>
-    )
+    _defineProperty(_assertThisInitialized(_this), "computeElementType", function () {
+      var onClick = _this.props.onClick;
+      if (onClick) return 'a';
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleClick", function (e) {
+      var disabled = _this.props.disabled;
+      if (!disabled) _invoke(_this.props, 'onClick', e, _this.props);
+    });
+
+    return _this;
   }
-}
 
-Step.create = createShorthandFactory(Step, (content) => ({ content }))
+  _createClass(Step, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          active = _this$props.active,
+          children = _this$props.children,
+          className = _this$props.className,
+          completed = _this$props.completed,
+          content = _this$props.content,
+          description = _this$props.description,
+          disabled = _this$props.disabled,
+          href = _this$props.href,
+          icon = _this$props.icon,
+          link = _this$props.link,
+          title = _this$props.title;
+      var classes = cx(useKeyOnly(active, 'active'), useKeyOnly(completed, 'completed'), useKeyOnly(disabled, 'disabled'), useKeyOnly(link, 'link'), 'step', className);
+      var rest = getUnhandledProps(Step, this.props);
+      var ElementType = getElementType(Step, this.props, this.computeElementType);
 
-export default Step
+      if (!childrenUtils.isNil(children)) {
+        return React.createElement(ElementType, _extends({}, rest, {
+          className: classes,
+          href: href,
+          onClick: this.handleClick
+        }), children);
+      }
+
+      if (!childrenUtils.isNil(content)) {
+        return React.createElement(ElementType, _extends({}, rest, {
+          className: classes,
+          href: href,
+          onClick: this.handleClick
+        }), content);
+      }
+
+      return React.createElement(ElementType, _extends({}, rest, {
+        className: classes,
+        href: href,
+        onClick: this.handleClick
+      }), Icon.create(icon, {
+        autoGenerateKey: false
+      }), StepContent.create({
+        description: description,
+        title: title
+      }, {
+        autoGenerateKey: false
+      }));
+    }
+  }]);
+
+  return Step;
+}(Component);
+
+_defineProperty(Step, "Content", StepContent);
+
+_defineProperty(Step, "Description", StepDescription);
+
+_defineProperty(Step, "Group", StepGroup);
+
+_defineProperty(Step, "Title", StepTitle);
+
+_defineProperty(Step, "handledProps", ["active", "as", "children", "className", "completed", "content", "description", "disabled", "href", "icon", "link", "onClick", "ordered", "title"]);
+
+Step.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** An element type to render as (string or function). */
+  as: PropTypes.elementType,
+
+  /** A step can be highlighted as active. */
+  active: PropTypes.bool,
+
+  /** Primary content. */
+  children: PropTypes.node,
+
+  /** Additional classes. */
+  className: PropTypes.string,
+
+  /** A step can show that a user has completed it. */
+  completed: PropTypes.bool,
+
+  /** Shorthand for primary content. */
+  content: customPropTypes.contentShorthand,
+
+  /** Shorthand for StepDescription. */
+  description: customPropTypes.itemShorthand,
+
+  /** Show that the Loader is inactive. */
+  disabled: PropTypes.bool,
+
+  /** Render as an `a` tag instead of a `div` and adds the href attribute. */
+  href: PropTypes.string,
+
+  /** Shorthand for Icon. */
+  icon: customPropTypes.itemShorthand,
+
+  /** A step can be link. */
+  link: PropTypes.bool,
+
+  /**
+   * Called on click. When passed, the component will render as an `a`
+   * tag by default instead of a `div`.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick: PropTypes.func,
+
+  /** A step can show a ordered sequence of steps. Passed from StepGroup. */
+  ordered: PropTypes.bool,
+
+  /** Shorthand for StepTitle. */
+  title: customPropTypes.itemShorthand
+} : {};
+Step.create = createShorthandFactory(Step, function (content) {
+  return {
+    content: content
+  };
+});
+export default Step;

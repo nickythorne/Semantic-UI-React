@@ -1,34 +1,34 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getElementType, getUnhandledProps } from '../../lib'
-import Radio from '../../addons/Radio'
-import FormField from './FormField'
-
+import _extends from "@babel/runtime/helpers/extends";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getElementType, getUnhandledProps } from '../../lib';
+import Radio from '../../addons/Radio';
+import FormField from './FormField';
 /**
  * Sugar for <Form.Field control={Radio} />.
  * @see Form
  * @see Radio
  */
-function FormRadio(props) {
-  const { control } = props
-  const rest = getUnhandledProps(FormRadio, props)
-  const ElementType = getElementType(FormRadio, props)
 
-  return <ElementType {...rest} control={control} />
+function FormRadio(props) {
+  var control = props.control;
+  var rest = getUnhandledProps(FormRadio, props);
+  var ElementType = getElementType(FormRadio, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    control: control
+  }));
 }
 
-FormRadio.propTypes = {
+FormRadio.handledProps = ["as", "control"];
+FormRadio.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** A FormField control prop. */
-  control: FormField.propTypes.control,
-}
-
+  control: FormField.propTypes.control
+} : {};
 FormRadio.defaultProps = {
   as: FormField,
-  control: Radio,
-}
-
-export default FormRadio
+  control: Radio
+};
+export default FormRadio;

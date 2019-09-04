@@ -1,61 +1,50 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useWidthProp,
-} from '../../lib'
-import Statistic from './Statistic'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import _map from "lodash/map";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useWidthProp } from '../../lib';
+import Statistic from './Statistic';
 /**
  * A group of statistics.
  */
-function StatisticGroup(props) {
-  const { children, className, color, content, horizontal, inverted, items, size, widths } = props
 
-  const classes = cx(
-    'ui',
-    color,
-    size,
-    useKeyOnly(horizontal, 'horizontal'),
-    useKeyOnly(inverted, 'inverted'),
-    useWidthProp(widths),
-    'statistics',
-    className,
-  )
-  const rest = getUnhandledProps(StatisticGroup, props)
-  const ElementType = getElementType(StatisticGroup, props)
+function StatisticGroup(props) {
+  var children = props.children,
+      className = props.className,
+      color = props.color,
+      content = props.content,
+      horizontal = props.horizontal,
+      inverted = props.inverted,
+      items = props.items,
+      size = props.size,
+      widths = props.widths;
+  var classes = cx('ui', color, size, useKeyOnly(horizontal, 'horizontal'), useKeyOnly(inverted, 'inverted'), useWidthProp(widths), 'statistics', className);
+  var rest = getUnhandledProps(StatisticGroup, props);
+  var ElementType = getElementType(StatisticGroup, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
-  }
-  if (!childrenUtils.isNil(content)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {content}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {_.map(items, (item) => Statistic.create(item))}
-    </ElementType>
-  )
+  if (!childrenUtils.isNil(content)) {
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), content);
+  }
+
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), _map(items, function (item) {
+    return Statistic.create(item);
+  }));
 }
 
-StatisticGroup.propTypes = {
+StatisticGroup.handledProps = ["as", "children", "className", "color", "content", "horizontal", "inverted", "items", "size", "widths"];
+StatisticGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -81,10 +70,9 @@ StatisticGroup.propTypes = {
   items: customPropTypes.collectionShorthand,
 
   /** A statistic group can vary in size. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'big', 'massive', 'medium')),
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'big', 'massive', 'medium')),
 
   /** A statistic group can have its items divided evenly. */
-  widths: PropTypes.oneOf(SUI.WIDTHS),
-}
-
-export default StatisticGroup
+  widths: PropTypes.oneOf(SUI.WIDTHS)
+} : {};
+export default StatisticGroup;

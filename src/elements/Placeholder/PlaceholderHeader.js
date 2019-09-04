@@ -1,32 +1,27 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
 /**
  * A placeholder can contain a header.
  */
-function PlaceholderHeader(props) {
-  const { children, className, content, image } = props
-  const classes = cx(useKeyOnly(image, 'image'), 'header', className)
-  const rest = getUnhandledProps(PlaceholderHeader, props)
-  const ElementType = getElementType(PlaceholderHeader, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function PlaceholderHeader(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      image = props.image;
+  var classes = cx(useKeyOnly(image, 'image'), 'header', className);
+  var rest = getUnhandledProps(PlaceholderHeader, props);
+  var ElementType = getElementType(PlaceholderHeader, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-PlaceholderHeader.propTypes = {
+PlaceholderHeader.handledProps = ["as", "children", "className", "content", "image"];
+PlaceholderHeader.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -40,7 +35,6 @@ PlaceholderHeader.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** A placeholder can contain an image. */
-  image: PropTypes.bool,
-}
-
-export default PlaceholderHeader
+  image: PropTypes.bool
+} : {};
+export default PlaceholderHeader;

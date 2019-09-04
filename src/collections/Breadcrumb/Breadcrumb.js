@@ -1,82 +1,96 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+"use strict";
 
-import { childrenUtils, customPropTypes, getUnhandledProps, getElementType, SUI } from '../../lib'
-import BreadcrumbDivider from './BreadcrumbDivider'
-import BreadcrumbSection from './BreadcrumbSection'
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _without2 = _interopRequireDefault(require("lodash/without"));
+
+var _each2 = _interopRequireDefault(require("lodash/each"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _lib = require("../../lib");
+
+var _BreadcrumbDivider = _interopRequireDefault(require("./BreadcrumbDivider"));
+
+var _BreadcrumbSection = _interopRequireDefault(require("./BreadcrumbSection"));
 
 /**
  * A breadcrumb is used to show hierarchy between content.
  */
 function Breadcrumb(props) {
-  const { children, className, divider, icon, sections, size } = props
+  var children = props.children,
+      className = props.className,
+      divider = props.divider,
+      icon = props.icon,
+      sections = props.sections,
+      size = props.size;
+  var classes = (0, _classnames["default"])('ui', size, 'breadcrumb', className);
+  var rest = (0, _lib.getUnhandledProps)(Breadcrumb, props);
+  var ElementType = (0, _lib.getElementType)(Breadcrumb, props);
 
-  const classes = cx('ui', size, 'breadcrumb', className)
-  const rest = getUnhandledProps(Breadcrumb, props)
-  const ElementType = getElementType(Breadcrumb, props)
-
-  if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+  if (!_lib.childrenUtils.isNil(children)) {
+    return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+      className: classes
+    }), children);
   }
 
-  const childElements = []
-
-  _.each(sections, (section, index) => {
+  var childElements = [];
+  (0, _each2["default"])(sections, function (section, index) {
     // section
-    const breadcrumbElement = BreadcrumbSection.create(section)
-    childElements.push(breadcrumbElement)
+    var breadcrumbElement = _BreadcrumbSection["default"].create(section);
 
-    // divider
+    childElements.push(breadcrumbElement); // divider
+
     if (index !== sections.length - 1) {
-      const key = `${breadcrumbElement.key}_divider` || JSON.stringify(section)
-      childElements.push(BreadcrumbDivider.create({ content: divider, icon, key }))
+      var key = "".concat(breadcrumbElement.key, "_divider") || JSON.stringify(section);
+      childElements.push(_BreadcrumbDivider["default"].create({
+        content: divider,
+        icon: icon,
+        key: key
+      }));
     }
-  })
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childElements}
-    </ElementType>
-  )
+  });
+  return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+    className: classes
+  }), childElements);
 }
 
-Breadcrumb.propTypes = {
+Breadcrumb.handledProps = ["as", "children", "className", "divider", "icon", "sections", "size"];
+Breadcrumb.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
-  as: PropTypes.elementType,
+  as: _propTypes["default"].elementType,
 
   /** Primary content. */
-  children: PropTypes.node,
+  children: _propTypes["default"].node,
 
   /** Additional classes. */
-  className: PropTypes.string,
+  className: _propTypes["default"].string,
 
   /** Shorthand for primary content of the Breadcrumb.Divider. */
-  divider: customPropTypes.every([
-    customPropTypes.disallow(['icon']),
-    customPropTypes.contentShorthand,
-  ]),
+  divider: _lib.customPropTypes.every([_lib.customPropTypes.disallow(['icon']), _lib.customPropTypes.contentShorthand]),
 
   /** For use with the sections prop. Render as an `Icon` component with `divider` class instead of a `div` in
    *  Breadcrumb.Divider. */
-  icon: customPropTypes.every([
-    customPropTypes.disallow(['divider']),
-    customPropTypes.itemShorthand,
-  ]),
+  icon: _lib.customPropTypes.every([_lib.customPropTypes.disallow(['divider']), _lib.customPropTypes.itemShorthand]),
 
   /** Shorthand array of props for Breadcrumb.Section. */
-  sections: customPropTypes.collectionShorthand,
+  sections: _lib.customPropTypes.collectionShorthand,
 
   /** Size of Breadcrumb. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'medium')),
-}
-
-Breadcrumb.Divider = BreadcrumbDivider
-Breadcrumb.Section = BreadcrumbSection
-
-export default Breadcrumb
+  size: _propTypes["default"].oneOf((0, _without2["default"])(_lib.SUI.SIZES, 'medium'))
+} : {};
+Breadcrumb.Divider = _BreadcrumbDivider["default"];
+Breadcrumb.Section = _BreadcrumbSection["default"];
+var _default = Breadcrumb;
+exports["default"] = _default;

@@ -1,57 +1,33 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useKeyOrValueAndKey,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useKeyOrValueAndKey } from '../../lib';
 /**
  * A loader alerts a user to wait for an activity to complete.
  * @see Dimmer
  */
+
 function Loader(props) {
-  const {
-    active,
-    children,
-    className,
-    content,
-    disabled,
-    indeterminate,
-    inline,
-    inverted,
-    size,
-  } = props
-
-  const classes = cx(
-    'ui',
-    size,
-    useKeyOnly(active, 'active'),
-    useKeyOnly(disabled, 'disabled'),
-    useKeyOnly(indeterminate, 'indeterminate'),
-    useKeyOnly(inverted, 'inverted'),
-    useKeyOnly(children || content, 'text'),
-    useKeyOrValueAndKey(inline, 'inline'),
-    'loader',
-    className,
-  )
-  const rest = getUnhandledProps(Loader, props)
-  const ElementType = getElementType(Loader, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var active = props.active,
+      children = props.children,
+      className = props.className,
+      content = props.content,
+      disabled = props.disabled,
+      indeterminate = props.indeterminate,
+      inline = props.inline,
+      inverted = props.inverted,
+      size = props.size;
+  var classes = cx('ui', size, useKeyOnly(active, 'active'), useKeyOnly(disabled, 'disabled'), useKeyOnly(indeterminate, 'indeterminate'), useKeyOnly(inverted, 'inverted'), useKeyOnly(children || content, 'text'), useKeyOrValueAndKey(inline, 'inline'), 'loader', className);
+  var rest = getUnhandledProps(Loader, props);
+  var ElementType = getElementType(Loader, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-Loader.propTypes = {
+Loader.handledProps = ["active", "as", "children", "className", "content", "disabled", "indeterminate", "inline", "inverted", "size"];
+Loader.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -80,7 +56,6 @@ Loader.propTypes = {
   inverted: PropTypes.bool,
 
   /** Loaders can have different sizes. */
-  size: PropTypes.oneOf(SUI.SIZES),
-}
-
-export default Loader
+  size: PropTypes.oneOf(SUI.SIZES)
+} : {};
+export default Loader;

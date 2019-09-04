@@ -1,32 +1,25 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * A PopupContent displays the content body of a Popover.
  */
+
 export default function PopupContent(props) {
-  const { children, className, content } = props
-  const classes = cx('content', className)
-  const rest = getUnhandledProps(PopupContent, props)
-  const ElementType = getElementType(PopupContent, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('content', className);
+  var rest = getUnhandledProps(PopupContent, props);
+  var ElementType = getElementType(PopupContent, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
-
-PopupContent.propTypes = {
+PopupContent.handledProps = ["as", "children", "className", "content"];
+PopupContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -37,7 +30,10 @@ PopupContent.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-PopupContent.create = createShorthandFactory(PopupContent, (children) => ({ children }))
+  content: customPropTypes.contentShorthand
+} : {};
+PopupContent.create = createShorthandFactory(PopupContent, function (children) {
+  return {
+    children: children
+  };
+});

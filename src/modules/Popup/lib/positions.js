@@ -1,18 +1,14 @@
-import _ from 'lodash'
-
-export const positionsMapping = {
+import _invert from "lodash/invert";
+import _keys from "lodash/keys";
+export var positionsMapping = {
   'top center': 'top',
   'top left': 'top-start',
   'top right': 'top-end',
-
   'bottom center': 'bottom',
   'bottom left': 'bottom-start',
   'bottom right': 'bottom-end',
-
   'right center': 'right',
-  'left center': 'left',
-}
-
-export const positions = _.keys(positionsMapping)
-
-export const placementMapping = _.invert(positionsMapping)
+  'left center': 'left'
+};
+export var positions = _keys(positionsMapping);
+export var placementMapping = _invert(positionsMapping);

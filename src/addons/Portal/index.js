@@ -1,1 +1,2 @@
-export default from './Portal'
+import _default from './Portal';
+export { _default as default };

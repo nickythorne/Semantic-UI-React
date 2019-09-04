@@ -1,10 +1,17 @@
-import _ from 'lodash'
+import _isNil from "lodash/isNil";
 
-const fitsMaxWidth = (width, maxWidth) => (_.isNil(maxWidth) ? true : width <= maxWidth)
+var fitsMaxWidth = function fitsMaxWidth(width, maxWidth) {
+  return _isNil(maxWidth) ? true : width <= maxWidth;
+};
 
-const fitsMinWidth = (width, minWidth) => (_.isNil(minWidth) ? true : width >= minWidth)
+var fitsMinWidth = function fitsMinWidth(width, minWidth) {
+  return _isNil(minWidth) ? true : width >= minWidth;
+};
 
-const isVisible = (width, { maxWidth, minWidth }) =>
-  fitsMinWidth(width, minWidth) && fitsMaxWidth(width, maxWidth)
+var isVisible = function isVisible(width, _ref) {
+  var maxWidth = _ref.maxWidth,
+      minWidth = _ref.minWidth;
+  return fitsMinWidth(width, minWidth) && fitsMaxWidth(width, maxWidth);
+};
 
-export default isVisible
+export default isVisible;

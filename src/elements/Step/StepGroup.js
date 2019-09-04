@@ -1,81 +1,60 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  numberToWordMap,
-  SUI,
-  useKeyOnly,
-  useKeyOrValueAndKey,
-  useValueAndKey,
-  useWidthProp,
-} from '../../lib'
-import Step from './Step'
-
-const numberMap = _.pickBy(numberToWordMap, (val, key) => key <= 8)
-
+import _toConsumableArray from "@babel/runtime/helpers/toConsumableArray";
+import _extends from "@babel/runtime/helpers/extends";
+import _values from "lodash/values";
+import _keys from "lodash/keys";
+import _without from "lodash/without";
+import _map from "lodash/map";
+import _pickBy from "lodash/pickBy";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, numberToWordMap, SUI, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useWidthProp } from '../../lib';
+import Step from './Step';
+var numberMap = process.env.NODE_ENV !== "production" ? _pickBy(numberToWordMap, function (val, key) {
+  return key <= 8;
+}) : {};
 /**
  * A set of steps.
  */
+
 function StepGroup(props) {
-  const {
-    attached,
-    children,
-    className,
-    content,
-    fluid,
-    items,
-    ordered,
-    size,
-    stackable,
-    unstackable,
-    vertical,
-    widths,
-  } = props
-  const classes = cx(
-    'ui',
-    size,
-    useKeyOnly(fluid, 'fluid'),
-    useKeyOnly(ordered, 'ordered'),
-    useKeyOnly(unstackable, 'unstackable'),
-    useKeyOnly(vertical, 'vertical'),
-    useKeyOrValueAndKey(attached, 'attached'),
-    useValueAndKey(stackable, 'stackable'),
-    useWidthProp(widths),
-    'steps',
-    className,
-  )
-  const rest = getUnhandledProps(StepGroup, props)
-  const ElementType = getElementType(StepGroup, props)
+  var attached = props.attached,
+      children = props.children,
+      className = props.className,
+      content = props.content,
+      fluid = props.fluid,
+      items = props.items,
+      ordered = props.ordered,
+      size = props.size,
+      stackable = props.stackable,
+      unstackable = props.unstackable,
+      vertical = props.vertical,
+      widths = props.widths;
+  var classes = cx('ui', size, useKeyOnly(fluid, 'fluid'), useKeyOnly(ordered, 'ordered'), useKeyOnly(unstackable, 'unstackable'), useKeyOnly(vertical, 'vertical'), useKeyOrValueAndKey(attached, 'attached'), useValueAndKey(stackable, 'stackable'), useWidthProp(widths), 'steps', className);
+  var rest = getUnhandledProps(StepGroup, props);
+  var ElementType = getElementType(StepGroup, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
-  }
-  if (!childrenUtils.isNil(content)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {content}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {_.map(items, (item) => Step.create(item))}
-    </ElementType>
-  )
+  if (!childrenUtils.isNil(content)) {
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), content);
+  }
+
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), _map(items, function (item) {
+    return Step.create(item);
+  }));
 }
 
-StepGroup.propTypes = {
+StepGroup.handledProps = ["as", "attached", "children", "className", "content", "fluid", "items", "ordered", "size", "stackable", "unstackable", "vertical", "widths"];
+StepGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -101,7 +80,7 @@ StepGroup.propTypes = {
   ordered: PropTypes.bool,
 
   /** Steps can have different sizes. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'medium')),
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'medium')),
 
   /** A step can stack vertically only on smaller screens. */
   stackable: PropTypes.oneOf(['tablet']),
@@ -113,11 +92,6 @@ StepGroup.propTypes = {
   vertical: PropTypes.bool,
 
   /** Steps can be divided evenly inside their parent. */
-  widths: PropTypes.oneOf([
-    ..._.keys(numberMap),
-    ..._.keys(numberMap).map(Number),
-    ..._.values(numberMap),
-  ]),
-}
-
-export default StepGroup
+  widths: PropTypes.oneOf([].concat(_toConsumableArray(_keys(numberMap)), _toConsumableArray(_keys(numberMap).map(Number)), _toConsumableArray(_values(numberMap))))
+} : {};
+export default StepGroup;

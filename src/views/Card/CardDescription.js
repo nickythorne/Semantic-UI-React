@@ -1,34 +1,28 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useTextAlignProp,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useTextAlignProp } from '../../lib';
 /**
  * A card can contain a description with one or more paragraphs.
  */
-function CardDescription(props) {
-  const { children, className, content, textAlign } = props
-  const classes = cx(useTextAlignProp(textAlign), 'description', className)
-  const rest = getUnhandledProps(CardDescription, props)
-  const ElementType = getElementType(CardDescription, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function CardDescription(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      textAlign = props.textAlign;
+  var classes = cx(useTextAlignProp(textAlign), 'description', className);
+  var rest = getUnhandledProps(CardDescription, props);
+  var ElementType = getElementType(CardDescription, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-CardDescription.propTypes = {
+CardDescription.handledProps = ["as", "children", "className", "content", "textAlign"];
+CardDescription.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -42,7 +36,6 @@ CardDescription.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** A card content can adjust its text alignment. */
-  textAlign: PropTypes.oneOf(_.without(SUI.TEXT_ALIGNMENTS, 'justified')),
-}
-
-export default CardDescription
+  textAlign: PropTypes.oneOf(_without(SUI.TEXT_ALIGNMENTS, 'justified'))
+} : {};
+export default CardDescription;

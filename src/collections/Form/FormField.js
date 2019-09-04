@@ -1,22 +1,14 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { createElement } from 'react'
-
-import {
-  childrenUtils,
-  createHTMLLabel,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useWidthProp,
-} from '../../lib'
-import Label from '../../elements/Label'
-import Checkbox from '../../modules/Checkbox'
-import Radio from '../../addons/Radio'
-
+import _objectSpread from "@babel/runtime/helpers/objectSpread";
+import _extends from "@babel/runtime/helpers/extends";
+import _isNil from "lodash/isNil";
+import _get from "lodash/get";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React, { createElement } from 'react';
+import { childrenUtils, createHTMLLabel, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useWidthProp } from '../../lib';
+import Label from '../../elements/Label';
+import Checkbox from '../../modules/Checkbox';
+import Radio from '../../addons/Radio';
 /**
  * A field is a form element containing a label and an input.
  * @see Form
@@ -28,111 +20,93 @@ import Radio from '../../addons/Radio'
  * @see Select
  * @see Visibility
  */
+
 function FormField(props) {
-  const {
-    children,
-    className,
-    content,
-    control,
-    disabled,
-    error,
-    inline,
-    label,
-    required,
-    type,
-    width,
-  } = props
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      control = props.control,
+      disabled = props.disabled,
+      error = props.error,
+      inline = props.inline,
+      label = props.label,
+      required = props.required,
+      type = props.type,
+      width = props.width;
+  var classes = cx(useKeyOnly(disabled, 'disabled'), useKeyOnly(error, 'error'), useKeyOnly(inline, 'inline'), useKeyOnly(required, 'required'), useWidthProp(width, 'wide'), 'field', className);
+  var rest = getUnhandledProps(FormField, props);
+  var ElementType = getElementType(FormField, props);
 
-  const classes = cx(
-    useKeyOnly(disabled, 'disabled'),
-    useKeyOnly(error, 'error'),
-    useKeyOnly(inline, 'inline'),
-    useKeyOnly(required, 'required'),
-    useWidthProp(width, 'wide'),
-    'field',
-    className,
-  )
-  const rest = getUnhandledProps(FormField, props)
-  const ElementType = getElementType(FormField, props)
+  var errorPointing = _get(error, 'pointing', 'above');
 
-  const errorPointing = _.get(error, 'pointing', 'above')
-  const errorLabel = Label.create(error, {
+  var errorLabel = Label.create(error, {
     autoGenerateKey: false,
-    defaultProps: { prompt: true, pointing: errorPointing },
-  })
-
-  const errorLabelBefore = (errorPointing === 'below' || errorPointing === 'right') && errorLabel
-  const errorLabelAfter = (errorPointing === 'above' || errorPointing === 'left') && errorLabel
-
-  // ----------------------------------------
+    defaultProps: {
+      prompt: true,
+      pointing: errorPointing
+    }
+  });
+  var errorLabelBefore = (errorPointing === 'below' || errorPointing === 'right') && errorLabel;
+  var errorLabelAfter = (errorPointing === 'above' || errorPointing === 'left') && errorLabel; // ----------------------------------------
   // No Control
   // ----------------------------------------
 
-  if (_.isNil(control)) {
-    if (_.isNil(label)) {
-      return (
-        <ElementType {...rest} className={classes}>
-          {childrenUtils.isNil(children) ? content : children}
-        </ElementType>
-      )
+  if (_isNil(control)) {
+    if (_isNil(label)) {
+      return React.createElement(ElementType, _extends({}, rest, {
+        className: classes
+      }), childrenUtils.isNil(children) ? content : children);
     }
 
-    return (
-      <ElementType {...rest} className={classes}>
-        {errorLabelBefore}
-        {createHTMLLabel(label, { autoGenerateKey: false })}
-        {errorLabelAfter}
-      </ElementType>
-    )
-  }
-
-  // ----------------------------------------
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), errorLabelBefore, createHTMLLabel(label, {
+      autoGenerateKey: false
+    }), errorLabelAfter);
+  } // ----------------------------------------
   // Checkbox/Radio Control
   // ----------------------------------------
-  const controlProps = { ...rest, content, children, disabled, required, type }
 
-  // wrap HTML checkboxes/radios in the label
+
+  var controlProps = _objectSpread({}, rest, {
+    content: content,
+    children: children,
+    disabled: disabled,
+    required: required,
+    type: type // wrap HTML checkboxes/radios in the label
+
+  });
+
   if (control === 'input' && (type === 'checkbox' || type === 'radio')) {
-    return (
-      <ElementType className={classes}>
-        <label>
-          {errorLabelBefore}
-          {createElement(control, controlProps)} {label}
-          {errorLabelAfter}
-        </label>
-      </ElementType>
-    )
-  }
+    return React.createElement(ElementType, {
+      className: classes
+    }, React.createElement("label", null, errorLabelBefore, createElement(control, controlProps), " ", label, errorLabelAfter));
+  } // pass label prop to controls that support it
 
-  // pass label prop to controls that support it
+
   if (control === Checkbox || control === Radio) {
-    return (
-      <ElementType className={classes}>
-        {errorLabelBefore}
-        {createElement(control, { ...controlProps, label })}
-        {errorLabelAfter}
-      </ElementType>
-    )
-  }
-
-  // ----------------------------------------
+    return React.createElement(ElementType, {
+      className: classes
+    }, errorLabelBefore, createElement(control, _objectSpread({}, controlProps, {
+      label: label
+    })), errorLabelAfter);
+  } // ----------------------------------------
   // Other Control
   // ----------------------------------------
 
-  return (
-    <ElementType className={classes}>
-      {createHTMLLabel(label, {
-        defaultProps: { htmlFor: _.get(controlProps, 'id') },
-        autoGenerateKey: false,
-      })}
-      {errorLabelBefore}
-      {createElement(control, controlProps)}
-      {errorLabelAfter}
-    </ElementType>
-  )
+
+  return React.createElement(ElementType, {
+    className: classes
+  }, createHTMLLabel(label, {
+    defaultProps: {
+      htmlFor: _get(controlProps, 'id')
+    },
+    autoGenerateKey: false
+  }), errorLabelBefore, createElement(control, controlProps), errorLabelAfter);
 }
 
-FormField.propTypes = {
+FormField.handledProps = ["as", "children", "className", "content", "control", "disabled", "error", "inline", "label", "required", "type", "width"];
+FormField.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -150,10 +124,7 @@ FormField.propTypes = {
    * Extra FormField props are passed to the control component.
    * Mutually exclusive with children.
    */
-  control: customPropTypes.some([
-    PropTypes.func,
-    PropTypes.oneOf(['button', 'input', 'select', 'textarea']),
-  ]),
+  control: customPropTypes.some([PropTypes.func, PropTypes.oneOf(['button', 'input', 'select', 'textarea'])]),
 
   /** Individual fields may be disabled. */
   disabled: PropTypes.bool,
@@ -163,10 +134,10 @@ FormField.propTypes = {
 
   /** A field can have its label next to instead of above it. */
   inline: PropTypes.bool,
-
   // Heads Up!
   // Do not disallow children with `label` shorthand
   // The `control` might accept a `label` prop and `children`
+
   /** Mutually exclusive with children. */
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
 
@@ -174,15 +145,9 @@ FormField.propTypes = {
   required: PropTypes.bool,
 
   /** Passed to the control component (i.e. <input type='password' />) */
-  type: customPropTypes.every([
-    customPropTypes.demand(['control']),
-    // don't strictly validate HTML types
-    // a control might be passed that uses a `type` prop with unknown values
-    // let the control validate if for us
-  ]),
+  type: customPropTypes.every([customPropTypes.demand(['control'])]),
 
   /** A field can specify its width in grid columns */
-  width: PropTypes.oneOf(SUI.WIDTHS),
-}
-
-export default FormField
+  width: PropTypes.oneOf(SUI.WIDTHS)
+} : {};
+export default FormField;

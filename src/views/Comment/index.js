@@ -1,1 +1,2 @@
-export default from './Comment'
+import _default from './Comment';
+export { _default as default };

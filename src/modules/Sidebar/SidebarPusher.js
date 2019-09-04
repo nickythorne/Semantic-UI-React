@@ -1,33 +1,27 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, useKeyOnly } from '../../lib';
 /**
  * A pushable sub-component for Sidebar.
  */
+
 function SidebarPusher(props) {
-  const { className, dimmed, children, content } = props
-
-  const classes = cx('pusher', useKeyOnly(dimmed, 'dimmed'), className)
-  const rest = getUnhandledProps(SidebarPusher, props)
-  const ElementType = getElementType(SidebarPusher, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var className = props.className,
+      dimmed = props.dimmed,
+      children = props.children,
+      content = props.content;
+  var classes = cx('pusher', useKeyOnly(dimmed, 'dimmed'), className);
+  var rest = getUnhandledProps(SidebarPusher, props);
+  var ElementType = getElementType(SidebarPusher, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-SidebarPusher.propTypes = {
+SidebarPusher.handledProps = ["as", "children", "className", "content", "dimmed"];
+SidebarPusher.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -41,7 +35,6 @@ SidebarPusher.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** Controls whether or not the dim is displayed. */
-  dimmed: PropTypes.bool,
-}
-
-export default SidebarPusher
+  dimmed: PropTypes.bool
+} : {};
+export default SidebarPusher;

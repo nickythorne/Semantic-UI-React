@@ -1,115 +1,114 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+"use strict";
 
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useTextAlignProp,
-  useVerticalAlignProp,
-} from '../../lib'
-import TableCell from './TableCell'
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _without2 = _interopRequireDefault(require("lodash/without"));
+
+var _map2 = _interopRequireDefault(require("lodash/map"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _lib = require("../../lib");
+
+var _TableCell = _interopRequireDefault(require("./TableCell"));
 
 /**
  * A table can have rows.
  */
 function TableRow(props) {
-  const {
-    active,
-    cellAs,
-    cells,
-    children,
-    className,
-    disabled,
-    error,
-    negative,
-    positive,
-    textAlign,
-    verticalAlign,
-    warning,
-  } = props
+  var active = props.active,
+      cellAs = props.cellAs,
+      cells = props.cells,
+      children = props.children,
+      className = props.className,
+      disabled = props.disabled,
+      error = props.error,
+      negative = props.negative,
+      positive = props.positive,
+      textAlign = props.textAlign,
+      verticalAlign = props.verticalAlign,
+      warning = props.warning;
+  var classes = (0, _classnames["default"])((0, _lib.useKeyOnly)(active, 'active'), (0, _lib.useKeyOnly)(disabled, 'disabled'), (0, _lib.useKeyOnly)(error, 'error'), (0, _lib.useKeyOnly)(negative, 'negative'), (0, _lib.useKeyOnly)(positive, 'positive'), (0, _lib.useKeyOnly)(warning, 'warning'), (0, _lib.useTextAlignProp)(textAlign), (0, _lib.useVerticalAlignProp)(verticalAlign), className);
+  var rest = (0, _lib.getUnhandledProps)(TableRow, props);
+  var ElementType = (0, _lib.getElementType)(TableRow, props);
 
-  const classes = cx(
-    useKeyOnly(active, 'active'),
-    useKeyOnly(disabled, 'disabled'),
-    useKeyOnly(error, 'error'),
-    useKeyOnly(negative, 'negative'),
-    useKeyOnly(positive, 'positive'),
-    useKeyOnly(warning, 'warning'),
-    useTextAlignProp(textAlign),
-    useVerticalAlignProp(verticalAlign),
-    className,
-  )
-  const rest = getUnhandledProps(TableRow, props)
-  const ElementType = getElementType(TableRow, props)
-
-  if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+  if (!_lib.childrenUtils.isNil(children)) {
+    return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+      className: classes
+    }), children);
   }
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {_.map(cells, (cell) => TableCell.create(cell, { defaultProps: { as: cellAs } }))}
-    </ElementType>
-  )
+  return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+    className: classes
+  }), (0, _map2["default"])(cells, function (cell) {
+    return _TableCell["default"].create(cell, {
+      defaultProps: {
+        as: cellAs
+      }
+    });
+  }));
 }
 
+TableRow.handledProps = ["active", "as", "cellAs", "cells", "children", "className", "disabled", "error", "negative", "positive", "textAlign", "verticalAlign", "warning"];
 TableRow.defaultProps = {
   as: 'tr',
-  cellAs: 'td',
-}
-
-TableRow.propTypes = {
+  cellAs: 'td'
+};
+TableRow.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
-  as: PropTypes.elementType,
+  as: _propTypes["default"].elementType,
 
   /** A row can be active or selected by a user. */
-  active: PropTypes.bool,
+  active: _propTypes["default"].bool,
 
   /** An element type to render as (string or function). */
-  cellAs: PropTypes.elementType,
+  cellAs: _propTypes["default"].elementType,
 
   /** Shorthand array of props for TableCell. */
-  cells: customPropTypes.collectionShorthand,
+  cells: _lib.customPropTypes.collectionShorthand,
 
   /** Primary content. */
-  children: PropTypes.node,
+  children: _propTypes["default"].node,
 
   /** Additional classes. */
-  className: PropTypes.string,
+  className: _propTypes["default"].string,
 
   /** A row can be disabled. */
-  disabled: PropTypes.bool,
+  disabled: _propTypes["default"].bool,
 
   /** A row may call attention to an error or a negative value. */
-  error: PropTypes.bool,
+  error: _propTypes["default"].bool,
 
   /** A row may let a user know whether a value is bad. */
-  negative: PropTypes.bool,
+  negative: _propTypes["default"].bool,
 
   /** A row may let a user know whether a value is good. */
-  positive: PropTypes.bool,
+  positive: _propTypes["default"].bool,
 
   /** A table row can adjust its text alignment. */
-  textAlign: PropTypes.oneOf(_.without(SUI.TEXT_ALIGNMENTS, 'justified')),
+  textAlign: _propTypes["default"].oneOf((0, _without2["default"])(_lib.SUI.TEXT_ALIGNMENTS, 'justified')),
 
   /** A table row can adjust its vertical alignment. */
-  verticalAlign: PropTypes.oneOf(SUI.VERTICAL_ALIGNMENTS),
+  verticalAlign: _propTypes["default"].oneOf(_lib.SUI.VERTICAL_ALIGNMENTS),
 
   /** A row may warn a user. */
-  warning: PropTypes.bool,
-}
-
-TableRow.create = createShorthandFactory(TableRow, (cells) => ({ cells }))
-
-export default TableRow
+  warning: _propTypes["default"].bool
+} : {};
+TableRow.create = (0, _lib.createShorthandFactory)(TableRow, function (cells) {
+  return {
+    cells: cells
+  };
+});
+var _default = TableRow;
+exports["default"] = _default;

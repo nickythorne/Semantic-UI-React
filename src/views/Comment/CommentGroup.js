@@ -1,43 +1,31 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly } from '../../lib';
 /**
  * Comments can be grouped.
  */
+
 function CommentGroup(props) {
-  const { className, children, collapsed, content, minimal, size, threaded } = props
-
-  const classes = cx(
-    'ui',
-    size,
-    useKeyOnly(collapsed, 'collapsed'),
-    useKeyOnly(minimal, 'minimal'),
-    useKeyOnly(threaded, 'threaded'),
-    'comments',
-    className,
-  )
-  const rest = getUnhandledProps(CommentGroup, props)
-  const ElementType = getElementType(CommentGroup, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var className = props.className,
+      children = props.children,
+      collapsed = props.collapsed,
+      content = props.content,
+      minimal = props.minimal,
+      size = props.size,
+      threaded = props.threaded;
+  var classes = cx('ui', size, useKeyOnly(collapsed, 'collapsed'), useKeyOnly(minimal, 'minimal'), useKeyOnly(threaded, 'threaded'), 'comments', className);
+  var rest = getUnhandledProps(CommentGroup, props);
+  var ElementType = getElementType(CommentGroup, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-CommentGroup.propTypes = {
+CommentGroup.handledProps = ["as", "children", "className", "collapsed", "content", "minimal", "size", "threaded"];
+CommentGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -57,10 +45,9 @@ CommentGroup.propTypes = {
   minimal: PropTypes.bool,
 
   /** Comments can have different sizes. */
-  size: PropTypes.oneOf(_.without(SUI.SIZES, 'medium')),
+  size: PropTypes.oneOf(_without(SUI.SIZES, 'medium')),
 
   /** A comment list can be threaded to showing the relationship between conversations. */
-  threaded: PropTypes.bool,
-}
-
-export default CommentGroup
+  threaded: PropTypes.bool
+} : {};
+export default CommentGroup;

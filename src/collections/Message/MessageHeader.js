@@ -1,45 +1,55 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+"use strict";
 
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _lib = require("../../lib");
 
 /**
  * A message can contain a header.
  */
 function MessageHeader(props) {
-  const { children, className, content } = props
-  const classes = cx('header', className)
-  const rest = getUnhandledProps(MessageHeader, props)
-  const ElementType = getElementType(MessageHeader, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = (0, _classnames["default"])('header', className);
+  var rest = (0, _lib.getUnhandledProps)(MessageHeader, props);
+  var ElementType = (0, _lib.getElementType)(MessageHeader, props);
+  return _react["default"].createElement(ElementType, (0, _extends2["default"])({}, rest, {
+    className: classes
+  }), _lib.childrenUtils.isNil(children) ? content : children);
 }
 
-MessageHeader.propTypes = {
+MessageHeader.handledProps = ["as", "children", "className", "content"];
+MessageHeader.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
-  as: PropTypes.elementType,
+  as: _propTypes["default"].elementType,
 
   /** Primary content. */
-  children: PropTypes.node,
+  children: _propTypes["default"].node,
 
   /** Additional classes. */
-  className: PropTypes.string,
+  className: _propTypes["default"].string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-MessageHeader.create = createShorthandFactory(MessageHeader, (val) => ({ content: val }))
-
-export default MessageHeader
+  content: _lib.customPropTypes.contentShorthand
+} : {};
+MessageHeader.create = (0, _lib.createShorthandFactory)(MessageHeader, function (val) {
+  return {
+    content: val
+  };
+});
+var _default = MessageHeader;
+exports["default"] = _default;

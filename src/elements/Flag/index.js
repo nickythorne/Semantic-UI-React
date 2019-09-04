@@ -1,1 +1,2 @@
-export default from './Flag'
+import _default from './Flag';
+export { _default as default };

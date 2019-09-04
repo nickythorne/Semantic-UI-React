@@ -1,1 +1,2 @@
-export default from './Grid'
+import _default from './Grid';
+export { _default as default };

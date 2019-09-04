@@ -1,17 +1,13 @@
-import { createEllipsisItem } from './itemFactories'
-
-export const createInnerPrefix = (firstGroupEnd, innerGroupStart, pageFactory) => {
-  const prefixPage = innerGroupStart - 1
-  const showEllipsis = prefixPage !== firstGroupEnd + 1
-  const prefixFactory = showEllipsis ? createEllipsisItem : pageFactory
-
-  return prefixFactory(prefixPage)
-}
-
-export const createInnerSuffix = (innerGroupEnd, lastGroupStart, pageFactory) => {
-  const suffixPage = innerGroupEnd + 1
-  const showEllipsis = suffixPage !== lastGroupStart - 1
-  const suffixFactory = showEllipsis ? createEllipsisItem : pageFactory
-
-  return suffixFactory(suffixPage)
-}
+import { createEllipsisItem } from './itemFactories';
+export var createInnerPrefix = function createInnerPrefix(firstGroupEnd, innerGroupStart, pageFactory) {
+  var prefixPage = innerGroupStart - 1;
+  var showEllipsis = prefixPage !== firstGroupEnd + 1;
+  var prefixFactory = showEllipsis ? createEllipsisItem : pageFactory;
+  return prefixFactory(prefixPage);
+};
+export var createInnerSuffix = function createInnerSuffix(innerGroupEnd, lastGroupStart, pageFactory) {
+  var suffixPage = innerGroupEnd + 1;
+  var showEllipsis = suffixPage !== lastGroupStart - 1;
+  var suffixFactory = showEllipsis ? createEllipsisItem : pageFactory;
+  return suffixFactory(suffixPage);
+};

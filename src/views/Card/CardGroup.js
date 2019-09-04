@@ -1,77 +1,55 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useKeyOnly,
-  useTextAlignProp,
-  useWidthProp,
-} from '../../lib'
-import Card from './Card'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import _map from "lodash/map";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useKeyOnly, useTextAlignProp, useWidthProp } from '../../lib';
+import Card from './Card';
 /**
  * A group of cards.
  */
-function CardGroup(props) {
-  const {
-    centered,
-    children,
-    className,
-    content,
-    doubling,
-    items,
-    itemsPerRow,
-    stackable,
-    textAlign,
-  } = props
 
-  const classes = cx(
-    'ui',
-    useKeyOnly(centered, 'centered'),
-    useKeyOnly(doubling, 'doubling'),
-    useKeyOnly(stackable, 'stackable'),
-    useTextAlignProp(textAlign),
-    useWidthProp(itemsPerRow),
-    'cards',
-    className,
-  )
-  const rest = getUnhandledProps(CardGroup, props)
-  const ElementType = getElementType(CardGroup, props)
+function CardGroup(props) {
+  var centered = props.centered,
+      children = props.children,
+      className = props.className,
+      content = props.content,
+      doubling = props.doubling,
+      items = props.items,
+      itemsPerRow = props.itemsPerRow,
+      stackable = props.stackable,
+      textAlign = props.textAlign;
+  var classes = cx('ui', useKeyOnly(centered, 'centered'), useKeyOnly(doubling, 'doubling'), useKeyOnly(stackable, 'stackable'), useTextAlignProp(textAlign), useWidthProp(itemsPerRow), 'cards', className);
+  var rest = getUnhandledProps(CardGroup, props);
+  var ElementType = getElementType(CardGroup, props);
 
   if (!childrenUtils.isNil(children)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {children}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), children);
   }
+
   if (!childrenUtils.isNil(content)) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {content}
-      </ElementType>
-    )
+    return React.createElement(ElementType, _extends({}, rest, {
+      className: classes
+    }), content);
   }
 
-  const itemsJSX = _.map(items, (item) => {
-    const key = item.key || [item.header, item.description].join('-')
-    return <Card key={key} {...item} />
-  })
+  var itemsJSX = _map(items, function (item) {
+    var key = item.key || [item.header, item.description].join('-');
+    return React.createElement(Card, _extends({
+      key: key
+    }, item));
+  });
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {itemsJSX}
-    </ElementType>
-  )
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), itemsJSX);
 }
 
-CardGroup.propTypes = {
+CardGroup.handledProps = ["as", "centered", "children", "className", "content", "doubling", "items", "itemsPerRow", "stackable", "textAlign"];
+CardGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -100,7 +78,6 @@ CardGroup.propTypes = {
   stackable: PropTypes.bool,
 
   /** A card group can adjust its text alignment. */
-  textAlign: PropTypes.oneOf(_.without(SUI.TEXT_ALIGNMENTS, 'justified')),
-}
-
-export default CardGroup
+  textAlign: PropTypes.oneOf(_without(SUI.TEXT_ALIGNMENTS, 'justified'))
+} : {};
+export default CardGroup;

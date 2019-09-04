@@ -1,29 +1,23 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 
 function StepDescription(props) {
-  const { children, className, content } = props
-  const classes = cx('description', className)
-  const rest = getUnhandledProps(StepDescription, props)
-  const ElementType = getElementType(StepDescription, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('description', className);
+  var rest = getUnhandledProps(StepDescription, props);
+  var ElementType = getElementType(StepDescription, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-StepDescription.propTypes = {
+StepDescription.handledProps = ["as", "children", "className", "content"];
+StepDescription.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -34,9 +28,11 @@ StepDescription.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-StepDescription.create = createShorthandFactory(StepDescription, (content) => ({ content }))
-
-export default StepDescription
+  content: customPropTypes.contentShorthand
+} : {};
+StepDescription.create = createShorthandFactory(StepDescription, function (content) {
+  return {
+    content: content
+  };
+});
+export default StepDescription;

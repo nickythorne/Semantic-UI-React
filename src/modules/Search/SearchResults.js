@@ -1,23 +1,23 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib'
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 
 function SearchResults(props) {
-  const { children, className, content } = props
-  const classes = cx('results transition', className)
-  const rest = getUnhandledProps(SearchResults, props)
-  const ElementType = getElementType(SearchResults, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('results transition', className);
+  var rest = getUnhandledProps(SearchResults, props);
+  var ElementType = getElementType(SearchResults, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-SearchResults.propTypes = {
+SearchResults.handledProps = ["as", "children", "className", "content"];
+SearchResults.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -28,7 +28,6 @@ SearchResults.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-export default SearchResults
+  content: customPropTypes.contentShorthand
+} : {};
+export default SearchResults;

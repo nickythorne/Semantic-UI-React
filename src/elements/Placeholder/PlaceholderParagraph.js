@@ -1,26 +1,26 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * A placeholder can contain a paragraph.
  */
-function PlaceholderParagraph(props) {
-  const { children, className, content } = props
-  const classes = cx('paragraph', className)
-  const rest = getUnhandledProps(PlaceholderParagraph, props)
-  const ElementType = getElementType(PlaceholderParagraph, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function PlaceholderParagraph(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('paragraph', className);
+  var rest = getUnhandledProps(PlaceholderParagraph, props);
+  var ElementType = getElementType(PlaceholderParagraph, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-PlaceholderParagraph.propTypes = {
+PlaceholderParagraph.handledProps = ["as", "children", "className", "content"];
+PlaceholderParagraph.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -31,7 +31,6 @@ PlaceholderParagraph.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-export default PlaceholderParagraph
+  content: customPropTypes.contentShorthand
+} : {};
+export default PlaceholderParagraph;

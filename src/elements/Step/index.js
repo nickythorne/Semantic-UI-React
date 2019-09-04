@@ -1,1 +1,2 @@
-export default from './Step'
+import _default from './Step';
+export { _default as default };

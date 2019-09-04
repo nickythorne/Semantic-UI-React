@@ -1,1 +1,2 @@
-export default from './Tab'
+import _default from './Tab';
+export { _default as default };

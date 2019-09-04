@@ -1,34 +1,34 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getElementType, getUnhandledProps } from '../../lib'
-import Input from '../../elements/Input'
-import FormField from './FormField'
-
+import _extends from "@babel/runtime/helpers/extends";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getElementType, getUnhandledProps } from '../../lib';
+import Input from '../../elements/Input';
+import FormField from './FormField';
 /**
  * Sugar for <Form.Field control={Input} />.
  * @see Form
  * @see Input
  */
-function FormInput(props) {
-  const { control } = props
-  const rest = getUnhandledProps(FormInput, props)
-  const ElementType = getElementType(FormInput, props)
 
-  return <ElementType {...rest} control={control} />
+function FormInput(props) {
+  var control = props.control;
+  var rest = getUnhandledProps(FormInput, props);
+  var ElementType = getElementType(FormInput, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    control: control
+  }));
 }
 
-FormInput.propTypes = {
+FormInput.handledProps = ["as", "control"];
+FormInput.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** A FormField control prop. */
-  control: FormField.propTypes.control,
-}
-
+  control: FormField.propTypes.control
+} : {};
 FormInput.defaultProps = {
   as: FormField,
-  control: Input,
-}
-
-export default FormInput
+  control: Input
+};
+export default FormInput;

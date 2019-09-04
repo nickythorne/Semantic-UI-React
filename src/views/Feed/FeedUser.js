@@ -1,26 +1,26 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * A feed can contain a user element.
  */
-function FeedUser(props) {
-  const { children, className, content } = props
-  const classes = cx('user', className)
-  const rest = getUnhandledProps(FeedUser, props)
-  const ElementType = getElementType(FeedUser, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function FeedUser(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('user', className);
+  var rest = getUnhandledProps(FeedUser, props);
+  var ElementType = getElementType(FeedUser, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-FeedUser.propTypes = {
+FeedUser.handledProps = ["as", "children", "className", "content"];
+FeedUser.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -31,11 +31,9 @@ FeedUser.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
+  content: customPropTypes.contentShorthand
+} : {};
 FeedUser.defaultProps = {
-  as: 'a',
-}
-
-export default FeedUser
+  as: 'a'
+};
+export default FeedUser;

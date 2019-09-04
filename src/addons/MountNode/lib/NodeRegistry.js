@@ -1,33 +1,41 @@
-export default class NodeRegistry {
-  constructor() {
-    this.nodes = new Map()
-  }
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
 
-  add = (nodeRef, component) => {
-    if (this.nodes.has(nodeRef)) {
-      const set = this.nodes.get(nodeRef)
+var NodeRegistry = function NodeRegistry() {
+  var _this = this;
 
-      set.add(component)
-      return
+  _classCallCheck(this, NodeRegistry);
+
+  _defineProperty(this, "add", function (nodeRef, component) {
+    if (_this.nodes.has(nodeRef)) {
+      var set = _this.nodes.get(nodeRef);
+
+      set.add(component);
+      return;
     }
 
-    this.nodes.set(nodeRef, new Set([component]))
-  }
+    _this.nodes.set(nodeRef, new Set([component]));
+  });
 
-  del = (nodeRef, component) => {
-    if (!this.nodes.has(nodeRef)) return
+  _defineProperty(this, "del", function (nodeRef, component) {
+    if (!_this.nodes.has(nodeRef)) return;
 
-    const set = this.nodes.get(nodeRef)
+    var set = _this.nodes.get(nodeRef);
 
     if (set.size === 1) {
-      this.nodes.delete(nodeRef)
-      return
+      _this.nodes["delete"](nodeRef);
+
+      return;
     }
 
-    set.delete(component)
-  }
+    set["delete"](component);
+  });
 
-  emit = (nodeRef, callback) => {
-    callback(nodeRef, this.nodes.get(nodeRef))
-  }
-}
+  _defineProperty(this, "emit", function (nodeRef, callback) {
+    callback(nodeRef, _this.nodes.get(nodeRef));
+  });
+
+  this.nodes = new Map();
+};
+
+export { NodeRegistry as default };

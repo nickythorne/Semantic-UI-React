@@ -1,1 +1,2 @@
-export default from './Statistic'
+import _default from './Statistic';
+export { _default as default };

@@ -1,34 +1,34 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getElementType, getUnhandledProps } from '../../lib'
-import TextArea from '../../addons/TextArea'
-import FormField from './FormField'
-
+import _extends from "@babel/runtime/helpers/extends";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getElementType, getUnhandledProps } from '../../lib';
+import TextArea from '../../addons/TextArea';
+import FormField from './FormField';
 /**
  * Sugar for <Form.Field control={TextArea} />.
  * @see Form
  * @see TextArea
  */
-function FormTextArea(props) {
-  const { control } = props
-  const rest = getUnhandledProps(FormTextArea, props)
-  const ElementType = getElementType(FormTextArea, props)
 
-  return <ElementType {...rest} control={control} />
+function FormTextArea(props) {
+  var control = props.control;
+  var rest = getUnhandledProps(FormTextArea, props);
+  var ElementType = getElementType(FormTextArea, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    control: control
+  }));
 }
 
-FormTextArea.propTypes = {
+FormTextArea.handledProps = ["as", "control"];
+FormTextArea.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
   /** A FormField control prop. */
-  control: FormField.propTypes.control,
-}
-
+  control: FormField.propTypes.control
+} : {};
 FormTextArea.defaultProps = {
   as: FormField,
-  control: TextArea,
-}
-
-export default FormTextArea
+  control: TextArea
+};
+export default FormTextArea;

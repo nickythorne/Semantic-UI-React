@@ -1,8 +1,7 @@
-import _ from 'lodash'
+import _difference from "lodash/difference";
 
-const computeClassNamesDifference = (prevClassNames, currentClassNames) => [
-  _.difference(currentClassNames, prevClassNames),
-  _.difference(prevClassNames, currentClassNames),
-]
+var computeClassNamesDifference = function computeClassNamesDifference(prevClassNames, currentClassNames) {
+  return [_difference(currentClassNames, prevClassNames), _difference(prevClassNames, currentClassNames)];
+};
 
-export default computeClassNamesDifference
+export default computeClassNamesDifference;

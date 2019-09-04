@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import { getUnhandledProps } from '../../lib'
-import TableHeader from './TableHeader'
-
+import _extends from "@babel/runtime/helpers/extends";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getUnhandledProps } from '../../lib';
+import TableHeader from './TableHeader';
 /**
  * A table can have a footer.
  */
+
 function TableFooter(props) {
-  const { as } = props
-  const rest = getUnhandledProps(TableFooter, props)
-
-  return <TableHeader {...rest} as={as} />
+  var as = props.as;
+  var rest = getUnhandledProps(TableFooter, props);
+  return React.createElement(TableHeader, _extends({}, rest, {
+    as: as
+  }));
 }
 
-TableFooter.propTypes = {
+TableFooter.handledProps = ["as"];
+TableFooter.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
-  as: PropTypes.elementType,
-}
-
+  as: PropTypes.elementType
+} : {};
 TableFooter.defaultProps = {
-  as: 'tfoot',
-}
-
-export default TableFooter
+  as: 'tfoot'
+};
+export default TableFooter;

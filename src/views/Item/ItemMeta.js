@@ -1,32 +1,26 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 /**
  * An item can contain content metadata.
  */
-function ItemMeta(props) {
-  const { children, className, content } = props
-  const classes = cx('meta', className)
-  const rest = getUnhandledProps(ItemMeta, props)
-  const ElementType = getElementType(ItemMeta, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function ItemMeta(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('meta', className);
+  var rest = getUnhandledProps(ItemMeta, props);
+  var ElementType = getElementType(ItemMeta, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-ItemMeta.propTypes = {
+ItemMeta.handledProps = ["as", "children", "className", "content"];
+ItemMeta.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -37,9 +31,11 @@ ItemMeta.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-ItemMeta.create = createShorthandFactory(ItemMeta, (content) => ({ content }))
-
-export default ItemMeta
+  content: customPropTypes.contentShorthand
+} : {};
+ItemMeta.create = createShorthandFactory(ItemMeta, function (content) {
+  return {
+    content: content
+  };
+});
+export default ItemMeta;

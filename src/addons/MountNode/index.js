@@ -1,1 +1,2 @@
-export default from './MountNode'
+import _default from './MountNode';
+export { _default as default };

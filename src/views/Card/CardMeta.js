@@ -1,34 +1,28 @@
-import cx from 'classnames'
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-  SUI,
-  useTextAlignProp,
-} from '../../lib'
-
+import _extends from "@babel/runtime/helpers/extends";
+import _without from "lodash/without";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, customPropTypes, getElementType, getUnhandledProps, SUI, useTextAlignProp } from '../../lib';
 /**
  * A card can contain content metadata.
  */
-function CardMeta(props) {
-  const { children, className, content, textAlign } = props
-  const classes = cx(useTextAlignProp(textAlign), 'meta', className)
-  const rest = getUnhandledProps(CardMeta, props)
-  const ElementType = getElementType(CardMeta, props)
 
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+function CardMeta(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      textAlign = props.textAlign;
+  var classes = cx(useTextAlignProp(textAlign), 'meta', className);
+  var rest = getUnhandledProps(CardMeta, props);
+  var ElementType = getElementType(CardMeta, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-CardMeta.propTypes = {
+CardMeta.handledProps = ["as", "children", "className", "content", "textAlign"];
+CardMeta.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -42,7 +36,6 @@ CardMeta.propTypes = {
   content: customPropTypes.contentShorthand,
 
   /** A card meta can adjust its text alignment. */
-  textAlign: PropTypes.oneOf(_.without(SUI.TEXT_ALIGNMENTS, 'justified')),
-}
-
-export default CardMeta
+  textAlign: PropTypes.oneOf(_without(SUI.TEXT_ALIGNMENTS, 'justified'))
+} : {};
+export default CardMeta;

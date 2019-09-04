@@ -1,29 +1,23 @@
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
-
-import {
-  childrenUtils,
-  createShorthandFactory,
-  customPropTypes,
-  getElementType,
-  getUnhandledProps,
-} from '../../lib'
+import _extends from "@babel/runtime/helpers/extends";
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { childrenUtils, createShorthandFactory, customPropTypes, getElementType, getUnhandledProps } from '../../lib';
 
 function LabelDetail(props) {
-  const { children, className, content } = props
-  const classes = cx('detail', className)
-  const rest = getUnhandledProps(LabelDetail, props)
-  const ElementType = getElementType(LabelDetail, props)
-
-  return (
-    <ElementType {...rest} className={classes}>
-      {childrenUtils.isNil(children) ? content : children}
-    </ElementType>
-  )
+  var children = props.children,
+      className = props.className,
+      content = props.content;
+  var classes = cx('detail', className);
+  var rest = getUnhandledProps(LabelDetail, props);
+  var ElementType = getElementType(LabelDetail, props);
+  return React.createElement(ElementType, _extends({}, rest, {
+    className: classes
+  }), childrenUtils.isNil(children) ? content : children);
 }
 
-LabelDetail.propTypes = {
+LabelDetail.handledProps = ["as", "children", "className", "content"];
+LabelDetail.propTypes = process.env.NODE_ENV !== "production" ? {
   /** An element type to render as (string or function). */
   as: PropTypes.elementType,
 
@@ -34,9 +28,11 @@ LabelDetail.propTypes = {
   className: PropTypes.string,
 
   /** Shorthand for primary content. */
-  content: customPropTypes.contentShorthand,
-}
-
-LabelDetail.create = createShorthandFactory(LabelDetail, (val) => ({ content: val }))
-
-export default LabelDetail
+  content: customPropTypes.contentShorthand
+} : {};
+LabelDetail.create = createShorthandFactory(LabelDetail, function (val) {
+  return {
+    content: val
+  };
+});
+export default LabelDetail;

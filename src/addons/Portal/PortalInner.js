@@ -1,65 +1,98 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { createPortal } from 'react-dom'
-
-import { customPropTypes, handleRef, isBrowser, makeDebugger } from '../../lib'
-import Ref from '../Ref'
-
-const debug = makeDebugger('portalInner')
+import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
+import _createClass from "@babel/runtime/helpers/createClass";
+import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
+import _assertThisInitialized from "@babel/runtime/helpers/assertThisInitialized";
+import _inherits from "@babel/runtime/helpers/inherits";
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _invoke from "lodash/invoke";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
+import { customPropTypes, handleRef, isBrowser } from '../../lib';
+import Ref from '../Ref';
 
 /**
  * An inner component that allows you to render children outside their parent.
  */
-class PortalInner extends Component {
-  static propTypes = {
-    /** Primary content. */
-    children: PropTypes.node.isRequired,
+var PortalInner =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PortalInner, _Component);
 
-    /** Called with a ref to the inner node. */
-    innerRef: customPropTypes.ref,
+  function PortalInner() {
+    var _getPrototypeOf2;
 
-    /** The node where the portal should mount. */
-    mountNode: PropTypes.any,
+    var _this;
 
-    /**
-     * Called when the portal is mounted on the DOM
-     *
-     * @param {null}
-     * @param {object} data - All props.
-     */
-    onMount: PropTypes.func,
+    _classCallCheck(this, PortalInner);
 
-    /**
-     * Called when the portal is unmounted from the DOM
-     *
-     * @param {null}
-     * @param {object} data - All props.
-     */
-    onUnmount: PropTypes.func,
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PortalInner)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "handleRef", function (c) {
+      handleRef(_this.props.innerRef, c);
+    });
+
+    return _this;
   }
 
-  componentDidMount() {
-    debug('componentDidMount()')
-    _.invoke(this.props, 'onMount', null, this.props)
-  }
+  _createClass(PortalInner, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      _invoke(this.props, 'onMount', null, this.props);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      _invoke(this.props, 'onUnmount', null, this.props);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!isBrowser()) return null;
+      var _this$props = this.props,
+          children = _this$props.children,
+          _this$props$mountNode = _this$props.mountNode,
+          mountNode = _this$props$mountNode === void 0 ? document.body : _this$props$mountNode;
+      return createPortal(React.createElement(Ref, {
+        innerRef: this.handleRef
+      }, children), mountNode);
+    }
+  }]);
 
-  componentWillUnmount() {
-    debug('componentWillUnmount()')
-    _.invoke(this.props, 'onUnmount', null, this.props)
-  }
+  return PortalInner;
+}(Component);
 
-  handleRef = (c) => {
-    debug('handleRef', c)
-    handleRef(this.props.innerRef, c)
-  }
+_defineProperty(PortalInner, "handledProps", ["children", "innerRef", "mountNode", "onMount", "onUnmount"]);
 
-  render() {
-    if (!isBrowser()) return null
-    const { children, mountNode = document.body } = this.props
+PortalInner.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** Primary content. */
+  children: PropTypes.node.isRequired,
 
-    return createPortal(<Ref innerRef={this.handleRef}>{children}</Ref>, mountNode)
-  }
-}
+  /** Called with a ref to the inner node. */
+  innerRef: customPropTypes.ref,
 
-export default PortalInner
+  /** The node where the portal should mount. */
+  mountNode: PropTypes.any,
+
+  /**
+   * Called when the portal is mounted on the DOM
+   *
+   * @param {null}
+   * @param {object} data - All props.
+   */
+  onMount: PropTypes.func,
+
+  /**
+   * Called when the portal is unmounted from the DOM
+   *
+   * @param {null}
+   * @param {object} data - All props.
+   */
+  onUnmount: PropTypes.func
+} : {};
+export default PortalInner;
